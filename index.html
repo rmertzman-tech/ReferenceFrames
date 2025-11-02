@@ -1,915 +1,2376 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ethics Assembly History Lab - Enhanced</title>
-    
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    
+    <title>Reference Frames: Interactive Learning Journey</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-        
-        .chart-container {
-            position: relative;
-            height: 300px;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .chart-bar {
-            display: inline-block;
-            margin: 0 2px;
-            border-radius: 4px 4px 0 0;
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #7c3aed;
+            --success: #059669;
+            --warning: #d97706;
+            --danger: #dc2626;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --text-dark: #1e293b;
+            --text-gray: #64748b;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--bg-white);
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 120px;
+            z-index: 90;
+        }
+
+        .nav-container {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            padding: 0.6rem 1.2rem;
+            border: 2px solid var(--primary);
+            background: white;
+            color: var(--primary);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
             transition: all 0.3s;
         }
-        .chart-bar:hover {
-            opacity: 0.8;
+
+        .nav-btn:hover {
+            background: var(--primary);
+            color: white;
             transform: translateY(-2px);
         }
-        
-        /* AI Tutor styles */
-        .tutor-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+        .nav-btn.active {
+            background: var(--primary);
             color: white;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            z-index: 1000;
-            transition: transform 0.3s;
         }
-        .tutor-button:hover {
-            transform: scale(1.1);
-        }
-        .tutor-panel {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 400px;
-            max-height: 600px;
+
+        /* Progress Bar */
+        .progress-container {
             background: white;
+            padding: 1rem;
+            margin: 2rem 0;
             border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            text-align: center;
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .card h3 {
+            color: var(--secondary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        .card p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .card ul, .card ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .card li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Interactive Elements */
+        .interactive-box {
+            background: var(--bg-light);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .interactive-box h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .example-box {
+            background: #f0f9ff;
+            border-left: 4px solid var(--success);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .example-box h4 {
+            color: var(--success);
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-box {
+            background: #fef3c7;
+            border-left: 4px solid var(--warning);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .warning-box h4 {
+            color: var(--warning);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        /* Quiz Styles */
+        .quiz-question {
+            margin: 2rem 0;
+        }
+
+        .quiz-options {
             display: flex;
             flex-direction: column;
+            gap: 1rem;
         }
-        .tutor-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px;
-            max-height: 450px;
-        }
-        .message {
-            margin-bottom: 12px;
-            padding: 10px 14px;
+
+        .quiz-option {
+            padding: 1rem;
+            border: 2px solid var(--border);
             border-radius: 8px;
-            max-width: 85%;
+            cursor: pointer;
+            transition: all 0.3s;
         }
-        .message-user {
-            background: #667eea;
+
+        .quiz-option:hover {
+            border-color: var(--primary);
+            background: var(--bg-light);
+        }
+
+        .quiz-option.correct {
+            border-color: var(--success);
+            background: #f0fdf4;
+        }
+
+        .quiz-option.incorrect {
+            border-color: var(--danger);
+            background: #fef2f2;
+        }
+
+        .quiz-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background: #f0fdf4;
+            border: 2px solid var(--success);
+            color: var(--success);
+        }
+
+        .quiz-feedback.incorrect {
+            background: #fef2f2;
+            border: 2px solid var(--danger);
+            color: var(--danger);
+        }
+
+        /* Scale Visualizer */
+        .scale-viz {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .scale-level {
+            padding: 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .scale-level:hover {
+            transform: translateX(10px);
+            border-color: var(--primary);
+        }
+
+        .scale-level.bio {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        }
+
+        .scale-level.neural {
+            background: linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%);
+        }
+
+        .scale-level.personal {
+            background: linear-gradient(135deg, #bfdbfe 0%, #93c5fd 100%);
+        }
+
+        .scale-level.social {
+            background: linear-gradient(135deg, #a7f3d0 0%, #6ee7b7 100%);
+        }
+
+        .scale-level h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .scale-detail {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid rgba(0,0,0,0.1);
+        }
+
+        .scale-level.expanded .scale-detail {
+            display: block;
+        }
+
+        /* Frame Exercise */
+        .frame-exercise {
+            margin: 2rem 0;
+        }
+
+        .frame-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            margin: 1rem 0;
+            font-family: inherit;
+        }
+
+        .frame-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        textarea.frame-input {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Slider */
+        .slider-container {
+            margin: 2rem 0;
+        }
+
+        .slider {
+            width: 100%;
+            margin: 1rem 0;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        .slider-value {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-top: 0.5rem;
+        }
+
+        /* Application Cards */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .app-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .app-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-4px);
+        }
+
+        .app-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .app-card .icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Action Plan */
+        .action-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            background: var(--bg-light);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .action-checkbox {
+            margin-top: 0.2rem;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .action-text {
+            flex: 1;
+        }
+
+        .action-text.completed {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+
+        /* Resources */
+        .resource-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .resource-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
             color: white;
-            margin-left: auto;
+            padding: 2rem 0;
+            margin-top: 4rem;
+            text-align: center;
         }
-        .message-tutor {
-            background: #f3f4f6;
-            color: #1f2937;
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
         }
-        
-        /* Glossary tooltip */
-        .glossary-term {
-            cursor: help;
-            border-bottom: 2px dotted #3b82f6;
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            nav {
+                top: 100px;
+            }
+
+            .nav-container {
+                justify-content: flex-start;
+                overflow-x: auto;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .app-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Tooltip */
+        .tooltip {
             position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted var(--primary);
+            cursor: help;
         }
-        .glossary-term:hover {
-            color: #3b82f6;
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 250px;
+            background-color: var(--text-dark);
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 0.5rem;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -125px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.85rem;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
         }
     </style>
 </head>
 <body>
-    <div id="root"></div>
+    <header>
+        <div class="container">
+            <h1>🔍 Reference Frames: Interactive Learning Journey</h1>
+            <p>From Personal Meaning to Global Transformation</p>
+        </div>
+    </header>
 
-    <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+    <nav>
+        <div class="container">
+            <div class="nav-container" id="navigation">
+                <!-- Navigation buttons will be inserted here -->
+            </div>
+        </div>
+    </nav>
 
-        // ========== GLOSSARY DEFINITIONS ==========
-        const glossary = {
-            'I': {
-                term: 'Protocol Complexity (I)',
-                definition: 'Measures how many rules and procedures a coalition requires. Higher I means more detailed protocols, creating more friction but potentially ensuring quality. Range: 0.0 (no rules) to 1.0 (extremely detailed protocols).',
-                example: 'Ancient Athens had low I (0.12) - simple shared cultural norms. Climate negotiations have high I (0.35) - complex international treaties.'
-            },
-            'epsilon': {
-                term: 'Tolerance for Difference (ε)',
-                definition: 'Measures how much diversity in beliefs and approaches the coalition can accommodate. Higher ε means groups can maintain different frameworks while coordinating. Range: 0.0 (requires uniformity) to 1.0 (welcomes radical difference).',
-                example: 'Green Belt Movement had high ε (0.40) - welcomed feminists, scientists, traditional women with different motivations.'
-            },
-            'ATCF': {
-                term: 'Authentic Temporal Coherence of Form',
-                definition: 'Measures whether each group maintains its authentic identity over time while coordinating. When ATCF drops, groups feel they\'re compromising core values. Healthy coalitions maintain ATCF > 0.7.',
-                example: 'If Catholic and Protestant states maintain their religious identities while making peace, both have high ATCF.'
-            },
-            'PRF': {
-                term: 'Personal Reasoning Framework',
-                definition: 'The combination of Beliefs, Rules, Ontology, and Authenticity criteria that shape how someone approaches moral decisions. Your PRF is your ethical "operating system".',
-                example: 'Kant\'s PRF emphasized rational principles and duty. Gilligan\'s PRF emphasized relationships and care. Both valid, different approaches.'
-            },
-            'functional equivalence': {
-                term: 'Functional Equivalence',
-                definition: 'The key insight of complexity ethics: groups with different beliefs can coordinate by achieving compatible OUTCOMES rather than agreeing on reasons. They "plant trees" for different reasons but the trees still get planted.',
-                example: 'Scientists plant trees for ecosystem restoration, women for firewood, feminists for empowerment - same outcome, different motivations.'
-            }
+    <div class="container">
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+            <div class="progress-text" id="progressText">Get started to begin your journey</div>
+        </div>
+
+        <main id="mainContent">
+            <!-- Content sections will be inserted here -->
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Reference Frames Learning Platform | <a href="https://github.com" target="_blank">View on GitHub</a></p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
+                Based on "Reference Frames: A Unified Lens for Understanding and Transforming Human Systems"
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Application State
+        const state = {
+            currentSection: 0,
+            completedSections: new Set(),
+            quizScores: {},
+            userNotes: {},
+            actionPlan: []
         };
 
-        // ========== ENHANCED SCENARIO WITH DIFFERENTIATED AGENTS ==========
-        const enhancedGreenBeltScenario = {
-            id: 'green-belt-enhanced',
-            title: 'Green Belt Movement (Enhanced)',
-            period: '1977-2006',
-            week: 3,
-            framework: 'Complexity Ethics in Action',
-            description: 'Real coordination across radical difference. Each group has DIFFERENT frameworks and motivations, yet achieves shared outcome through functional equivalence.',
-            learningGoal: 'See how minimal protocol + high tolerance enables groups with incompatible beliefs to coordinate effectively',
-            task: { description: 'Plant 51 million trees across Kenya', successCriteria: 'All groups maintain authenticity while achieving shared outcome' },
-            defaultI: 0.01,
-            defaultEpsilon: 0.40,
-            agents: [
-                {
-                    name: 'Traditional Women',
-                    framework: 'Care Ethics',
-                    initialATCF: 0.85,
-                    motivation: 'Survival and family care',
-                    reasoning: 'Trees provide firewood and prevent soil erosion that threatens our farms',
-                    decisionStyle: 'Context-dependent, relationship-focused',
-                    capabilities: [{name: 'Tree planting', level: 0.9}, {name: 'Local knowledge', level: 0.95}],
-                    beliefs: [{text: 'Care for family and community', strength: 95}],
-                    color: '#10b981'
-                },
-                {
-                    name: 'Environmental Scientists',
-                    framework: 'Consequentialism',
-                    initialATCF: 0.80,
-                    motivation: 'Ecosystem restoration',
-                    reasoning: 'Deforestation causes measurable harm; reforestation produces measurable benefits',
-                    decisionStyle: 'Evidence-based, outcome-focused',
-                    capabilities: [{name: 'Ecology expertise', level: 0.95}, {name: 'Research', level: 0.9}],
-                    beliefs: [{text: 'Maximize ecosystem health', strength: 90}],
-                    color: '#3b82f6'
-                },
-                {
-                    name: 'Feminist Activists',
-                    framework: 'Deontology (Rights-based)',
-                    initialATCF: 0.85,
-                    motivation: 'Women\'s empowerment and rights',
-                    reasoning: 'Women have right to economic independence; tree planting provides income',
-                    decisionStyle: 'Principle-driven, justice-focused',
-                    capabilities: [{name: 'Political organizing', level: 0.85}, {name: 'Advocacy', level: 0.9}],
-                    beliefs: [{text: 'Women\'s dignity and rights', strength: 90}],
-                    color: '#8b5cf6'
-                },
-                {
-                    name: 'Religious Leaders',
-                    framework: 'Virtue Ethics',
-                    initialATCF: 0.80,
-                    motivation: 'Stewardship duty',
-                    reasoning: 'God entrusted creation to our care; we must be good stewards',
-                    decisionStyle: 'Character-based, traditional wisdom',
-                    capabilities: [{name: 'Community influence', level: 0.85}, {name: 'Moral guidance', level: 0.8}],
-                    beliefs: [{text: 'Fulfill stewardship role', strength: 85}],
-                    color: '#f59e0b'
-                }
-            ],
-            pedagogicalNotes: [
-                'Notice: Each group has DIFFERENT framework, motivation, and reasoning style',
-                'The protocol is minimal (I=0.01): "Plant indigenous trees"',
-                'High tolerance (ε=0.40) allows each group to maintain authentic identity',
-                'Success comes from FUNCTIONAL EQUIVALENCE not belief agreement',
-                'Compare this to scenarios where everyone shares the same framework'
-            ]
-        };
-
-        // ========== AI TUTOR COMPONENT ==========
-        function AITutor({ currentPage, scenario }) {
-            const [isOpen, setIsOpen] = useState(false);
-            const [messages, setMessages] = useState([
-                {
-                    role: 'tutor',
-                    content: 'Hi! I\'m your Ethics Lab tutor. Ask me anything about the scenarios, frameworks, or concepts. I have access to all course content!'
-                }
-            ]);
-            const [input, setInput] = useState('');
-            const [isLoading, setIsLoading] = useState(false);
-            const messagesEndRef = useRef(null);
-
-            const scrollToBottom = () => {
-                messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-            };
-
-            useEffect(() => {
-                scrollToBottom();
-            }, [messages]);
-
-            const handleSend = async () => {
-                if (!input.trim() || isLoading) return;
-
-                const userMessage = input.trim();
-                setInput('');
-                setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
-                setIsLoading(true);
-
-                try {
-                    // Build context for the AI
-                    let context = `You are an expert tutor for the Ethics Assembly History Lab course. 
-                    
-Current page: ${currentPage}
-${scenario ? `Current scenario: ${scenario.title} - ${scenario.description}` : ''}
-
-Course concepts you can explain:
-- Protocol Complexity (I): ${glossary.I.definition}
-- Tolerance (ε): ${glossary.epsilon.definition}
-- ATCF: ${glossary.ATCF.definition}
-- PRF: ${glossary.PRF.definition}
-- Functional Equivalence: ${glossary['functional equivalence'].definition}
-
-The course teaches that traditional ethics assumes we must AGREE on values to coordinate. Complexity ethics shows we can coordinate through FUNCTIONAL EQUIVALENCE - achieving compatible outcomes despite different motivations.
-
-Student question: ${userMessage}
-
-Provide a clear, helpful response in 2-3 paragraphs. Use examples from the scenarios when relevant. Be encouraging and pedagogical.`;
-
-                    const response = await fetch("https://api.anthropic.com/v1/messages", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            model: "claude-sonnet-4-20250514",
-                            max_tokens: 500,
-                            messages: [
-                                { role: "user", content: context }
-                            ]
-                        })
-                    });
-
-                    const data = await response.json();
-                    const tutorResponse = data.content[0].text;
-
-                    setMessages(prev => [...prev, { role: 'tutor', content: tutorResponse }]);
-                } catch (error) {
-                    console.error('Tutor error:', error);
-                    setMessages(prev => [...prev, { 
-                        role: 'tutor', 
-                        content: 'Sorry, I encountered an error. Please try again or ask a different question!' 
-                    }]);
-                }
-
-                setIsLoading(false);
-            };
-
-            return (
-                <>
-                    <button 
-                        className="tutor-button"
-                        onClick={() => setIsOpen(!isOpen)}
-                        title="Ask the AI Tutor">
-                        🤖
-                    </button>
-
-                    {isOpen && (
-                        <div className="tutor-panel">
-                            <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-4 rounded-t-xl">
-                                <div className="flex justify-between items-center">
-                                    <h3 className="font-bold text-lg">AI Ethics Tutor</h3>
-                                    <button onClick={() => setIsOpen(false)} className="text-white text-xl">×</button>
-                                </div>
-                                <p className="text-xs mt-1 text-purple-100">Ask about scenarios, concepts, or frameworks</p>
-                            </div>
-
-                            <div className="tutor-messages">
-                                {messages.map((msg, idx) => (
-                                    <div key={idx} className={`message ${msg.role === 'user' ? 'message-user' : 'message-tutor'}`}>
-                                        <div className="text-xs font-semibold mb-1 opacity-70">
-                                            {msg.role === 'user' ? 'You' : '🤖 Tutor'}
-                                        </div>
-                                        <div className="text-sm">{msg.content}</div>
-                                    </div>
-                                ))}
-                                {isLoading && (
-                                    <div className="message message-tutor">
-                                        <div className="text-sm">Thinking...</div>
-                                    </div>
-                                )}
-                                <div ref={messagesEndRef} />
-                            </div>
-
-                            <div className="p-3 border-t">
-                                <div className="flex gap-2">
-                                    <input
-                                        type="text"
-                                        value={input}
-                                        onChange={(e) => setInput(e.target.value)}
-                                        onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                                        placeholder="Ask a question..."
-                                        className="flex-1 px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
-                                        disabled={isLoading}
-                                    />
-                                    <button
-                                        onClick={handleSend}
-                                        disabled={isLoading || !input.trim()}
-                                        className="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-purple-700 disabled:bg-gray-300 disabled:cursor-not-allowed">
-                                        Send
-                                    </button>
-                                </div>
-                                <div className="mt-2 text-xs text-gray-500">
-                                    Try: "Explain functional equivalence" or "Why does high I create friction?"
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </>
-            );
-        }
-
-        // ========== GLOSSARY TOOLTIP COMPONENT ==========
-        function GlossaryTerm({ term, children }) {
-            const [showTooltip, setShowTooltip] = useState(false);
-            const entry = glossary[term];
-
-            if (!entry) return <span>{children}</span>;
-
-            return (
-                <span 
-                    className="glossary-term inline-block relative"
-                    onMouseEnter={() => setShowTooltip(true)}
-                    onMouseLeave={() => setShowTooltip(false)}>
-                    {children}
-                    {showTooltip && (
-                        <div className="absolute z-50 w-80 p-4 bg-white border-2 border-blue-500 rounded-lg shadow-xl bottom-full left-0 mb-2">
-                            <h4 className="font-bold text-blue-600 mb-2">{entry.term}</h4>
-                            <p className="text-sm text-gray-700 mb-2">{entry.definition}</p>
-                            <p className="text-xs text-gray-600 italic"><strong>Example:</strong> {entry.example}</p>
-                        </div>
-                    )}
-                </span>
-            );
-        }
-
-        // ========== ENHANCED SIMULATION (Framework-Aware) ==========
-        function runEnhancedSimulation(scenario, I, epsilon, numRuns = 20, numSteps = 10) {
-            const results = {
-                runs: [],
-                summary: { avgSuccessRate: 0, avgFinalATCF: 0, robustness: 0 },
-                timeSeriesData: Array.from({length: numSteps}, (_, i) => ({ 
-                    time: i + 1, avgSuccess: 0, avgATCF: 0, runs: [], agentData: {}
-                })),
-                agentTimeSeries: scenario.agents.map(agent => ({
-                    name: agent.name,
-                    framework: agent.framework,
-                    color: agent.color || '#3b82f6',
-                    atcfOverTime: []
-                }))
-            };
-
-            let totalSuccesses = 0, totalFinalATCF = 0;
-
-            for (let run = 0; run < numRuns; run++) {
-                const runData = { runNumber: run + 1, steps: [] };
-                
-                for (let step = 0; step < numSteps; step++) {
-                    // Calculate framework compatibility
-                    const frameworkDiversity = new Set(scenario.agents.map(a => a.framework)).size;
-                    const diversityFactor = frameworkDiversity / scenario.agents.length;
-
-                    // Base success probability
-                    let successProb = 0.5 - (I * 0.15) + (epsilon * 0.3);
-                    
-                    // High diversity requires high epsilon
-                    if (diversityFactor > 0.5 && epsilon < 0.3) {
-                        successProb -= 0.2; // Penalty for diverse group with low tolerance
-                    }
-                    
-                    // Functional equivalence bonus (low I + high epsilon with diversity)
-                    if (I < 0.1 && epsilon > 0.35 && diversityFactor > 0.5) {
-                        successProb += 0.15; // Complexity ethics working!
-                    }
-
-                    const success = Math.random() < Math.max(0.05, Math.min(0.95, successProb));
-
-                    // Calculate ATCF per agent (framework-specific)
-                    const agentATCFs = scenario.agents.map(agent => {
-                        let atcf = agent.initialATCF || 0.8;
-                        
-                        // Framework-specific ATCF calculation
-                        if (agent.framework === 'Care Ethics' && I > 0.3) {
-                            atcf -= 0.15; // Care ethics suffers under rigid protocols
-                        }
-                        if (agent.framework === 'Deontology' && I < 0.15) {
-                            atcf -= 0.1; // Deontology wants some structure
-                        }
-                        if (agent.framework === 'Consequentialism' && !success) {
-                            atcf -= 0.05; // Consequentialists care about outcomes
-                        }
-                        
-                        // Universal factors
-                        atcf -= I * 0.1;
-                        atcf += epsilon * 0.15;
-                        atcf -= step * 0.015;
-                        
-                        return Math.max(0.1, Math.min(1.0, atcf));
-                    });
-
-                    const avgATCF = agentATCFs.reduce((sum, a) => sum + a, 0) / agentATCFs.length;
-
-                    runData.steps.push({ step: step + 1, success, avgATCF, agentATCFs });
-                    results.timeSeriesData[step].runs.push({ success: success ? 1 : 0, atcf: avgATCF });
-                    
-                    // Store per-agent ATCF
-                    agentATCFs.forEach((atcf, idx) => {
-                        if (!results.timeSeriesData[step].agentData[scenario.agents[idx].name]) {
-                            results.timeSeriesData[step].agentData[scenario.agents[idx].name] = [];
-                        }
-                        results.timeSeriesData[step].agentData[scenario.agents[idx].name].push(atcf);
-                    });
-                }
-
-                const finalStep = runData.steps[numSteps - 1];
-                totalSuccesses += finalStep.success ? 1 : 0;
-                totalFinalATCF += finalStep.avgATCF;
-                results.runs.push(runData);
+        // Section Definitions
+        const sections = [
+            {
+                id: 'intro',
+                title: 'Introduction',
+                shortTitle: 'Start',
+                content: generateIntroSection
+            },
+            {
+                id: 'what-are-frames',
+                title: 'What Are Reference Frames?',
+                shortTitle: 'Basics',
+                content: generateBasicsSection
+            },
+            {
+                id: 'scales',
+                title: 'The Scale Hierarchy',
+                shortTitle: 'Scales',
+                content: generateScalesSection
+            },
+            {
+                id: 'meta-constructor',
+                title: 'Meta-Constructor Capacity',
+                shortTitle: 'Meta-Constructor',
+                content: generateMetaConstructorSection
+            },
+            {
+                id: 'atcf',
+                title: 'Temporal Coherence (ATCF)',
+                shortTitle: 'ATCF',
+                content: generateATCFSection
+            },
+            {
+                id: 'applications',
+                title: 'Real-World Applications',
+                shortTitle: 'Applications',
+                content: generateApplicationsSection
+            },
+            {
+                id: 'personal-practice',
+                title: 'Personal Practice',
+                shortTitle: 'Practice',
+                content: generatePracticeSection
+            },
+            {
+                id: 'action-plan',
+                title: 'Your Action Plan',
+                shortTitle: 'Action Plan',
+                content: generateActionPlanSection
             }
+        ];
 
-            // Calculate averages
-            results.timeSeriesData.forEach(tp => {
-                tp.avgSuccess = tp.runs.reduce((s, r) => s + r.success, 0) / tp.runs.length * 100;
-                tp.avgATCF = tp.runs.reduce((s, r) => s + r.atcf, 0) / tp.runs.length * 100;
-                
-                // Average ATCF per agent
-                Object.keys(tp.agentData).forEach(agentName => {
-                    const values = tp.agentData[agentName];
-                    tp.agentData[agentName] = values.reduce((s, v) => s + v, 0) / values.length * 100;
-                });
-            });
-
-            // Build agent time series
-            results.agentTimeSeries.forEach((agentSeries, idx) => {
-                agentSeries.atcfOverTime = results.timeSeriesData.map(tp => ({
-                    time: tp.time,
-                    atcf: tp.agentData[scenario.agents[idx].name] || 0
-                }));
-            });
-
-            results.summary.avgSuccessRate = (totalSuccesses / numRuns) * 100;
-            results.summary.avgFinalATCF = totalFinalATCF / numRuns;
-            
-            const successRates = results.runs.map(r => r.steps[numSteps-1].success ? 100 : 0);
-            const variance = successRates.reduce((sum, sr) => 
-                sum + Math.pow(sr - results.summary.avgSuccessRate, 2), 0
-            ) / numRuns;
-            results.summary.robustness = Math.max(0, 100 - Math.sqrt(variance));
-
-            return results;
+        // Initialize App
+        function initApp() {
+            generateNavigation();
+            loadAllSections();
+            loadState();
+            showSection(0);
+            updateProgress();
         }
 
-        // ========== ENHANCED CHART WITH PER-AGENT ATCF ==========
-        function EnhancedChart({ data, agentTimeSeries, title }) {
-            const maxValue = 100;
+        // Generate Navigation
+        function generateNavigation() {
+            const nav = document.getElementById('navigation');
+            sections.forEach((section, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'nav-btn';
+                btn.textContent = section.shortTitle;
+                btn.onclick = () => showSection(index);
+                btn.id = `nav-${index}`;
+                nav.appendChild(btn);
+            });
+        }
+
+        // Load All Sections
+        function loadAllSections() {
+            const main = document.getElementById('mainContent');
+            sections.forEach((section, index) => {
+                const sectionDiv = document.createElement('div');
+                sectionDiv.className = 'section';
+                sectionDiv.id = `section-${index}`;
+                sectionDiv.innerHTML = section.content(index);
+                main.appendChild(sectionDiv);
+            });
+        }
+
+        // Show Section
+        function showSection(index) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             
-            return (
-                <div>
-                    <h4 className="text-lg font-semibold text-gray-800 mb-4">{title}</h4>
+            // Show target section
+            document.getElementById(`section-${index}`).classList.add('active');
+            document.getElementById(`nav-${index}`).classList.add('active');
+            
+            state.currentSection = index;
+            updateProgress();
+            saveState();
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Update Progress
+        function updateProgress() {
+            const progressPercent = (state.completedSections.size / sections.length) * 100;
+            document.getElementById('progressBar').style.width = `${progressPercent}%`;
+            document.getElementById('progressText').textContent = 
+                `${state.completedSections.size} of ${sections.length} sections completed (${Math.round(progressPercent)}%)`;
+        }
+
+        // Mark Section Complete
+        function markComplete(sectionIndex) {
+            state.completedSections.add(sectionIndex);
+            updateProgress();
+            saveState();
+            
+            // Show celebration if all complete
+            if (state.completedSections.size === sections.length) {
+                alert('🎉 Congratulations! You\'ve completed the entire learning journey!');
+            }
+        }
+
+        // Save State to LocalStorage
+        function saveState() {
+            localStorage.setItem('referenceFramesState', JSON.stringify(state));
+        }
+
+        // Load State from LocalStorage
+        function loadState() {
+            const saved = localStorage.getItem('referenceFramesState');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                state.completedSections = new Set(parsed.completedSections || []);
+                state.quizScores = parsed.quizScores || {};
+                state.userNotes = parsed.userNotes || {};
+                state.actionPlan = parsed.actionPlan || [];
+            }
+        }
+
+        // Section Content Generators
+
+        function generateIntroSection(index) {
+            return `
+                <div class="card">
+                    <h2>Welcome to Reference Frames</h2>
+                    <p style="font-size: 1.1rem; color: var(--secondary); font-weight: 600;">
+                        A Unified Lens for Understanding and Transforming Human Systems
+                    </p>
                     
-                    {/* Success Rate Chart */}
-                    <div className="chart-container bg-gray-50 mb-6">
-                        <p className="text-sm font-semibold text-gray-600 mb-2">Success Rate Over Time</p>
-                        <div className="flex justify-between h-full items-end px-2">
-                            {data.map((d, i) => (
-                                <div key={i} className="flex-1 flex flex-col items-center justify-end" style={{height: '90%'}}>
-                                    <div 
-                                        className="chart-bar w-full"
-                                        style={{
-                                            height: `${d.avgSuccess}%`,
-                                            background: 'linear-gradient(to top, #3b82f6, #60a5fa)',
-                                            maxWidth: '20px'
-                                        }}
-                                        title={`Success: ${d.avgSuccess.toFixed(1)}%`}>
-                                    </div>
-                                    <span className="text-xs text-gray-500 mt-2">{d.time}</span>
-                                </div>
-                            ))}
-                        </div>
+                    <div class="interactive-box">
+                        <h4>🎯 What You'll Learn</h4>
+                        <p>This interactive journey will teach you:</p>
+                        <ul>
+                            <li><strong>What reference frames are</strong> and why they matter for everything from personal meaning to global crises</li>
+                            <li><strong>How frames operate across scales</strong> from cells to civilizations</li>
+                            <li><strong>Meta-constructor capacity</strong>—your ability to examine and modify your own frames</li>
+                            <li><strong>Temporal coherence (ATCF)</strong>—maintaining identity across time and change</li>
+                            <li><strong>Applications to real challenges</strong>—inequality, discrimination, existential risks, meaningful living</li>
+                            <li><strong>Practical tools</strong> for daily frame work and personal development</li>
+                        </ul>
                     </div>
 
-                    {/* ATCF by Agent Chart */}
-                    {agentTimeSeries && agentTimeSeries.length > 0 && (
-                        <div className="chart-container bg-gray-50">
-                            <p className="text-sm font-semibold text-gray-600 mb-2">ATCF by Stakeholder Group</p>
-                            <div className="flex justify-between h-full items-end px-2">
-                                {data.map((d, timeIdx) => (
-                                    <div key={timeIdx} className="flex-1 flex flex-col items-center justify-end" style={{height: '90%'}}>
-                                        <div className="flex gap-0.5 items-end h-full">
-                                            {agentTimeSeries.map((agent, agentIdx) => (
-                                                <div
-                                                    key={agentIdx}
-                                                    className="chart-bar"
-                                                    style={{
-                                                        height: `${agent.atcfOverTime[timeIdx].atcf}%`,
-                                                        width: `${100 / agentTimeSeries.length / data.length}px`,
-                                                        background: agent.color
-                                                    }}
-                                                    title={`${agent.name}: ${agent.atcfOverTime[timeIdx].atcf.toFixed(1)}%`}>
-                                                </div>
-                                            ))}
-                                        </div>
-                                        <span className="text-xs text-gray-500 mt-2">{d.time}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
+                    <h3>Why Reference Frames Matter</h3>
+                    <p>
+                        Every observation requires a perspective. Every measurement needs units. Every judgment assumes standards. 
+                        Every action depends on what counts as "the same" across contexts.
+                    </p>
+                    <p>
+                        These are <strong>reference frames</strong>—the operational structures that make information meaningful 
+                        and action possible. They're so fundamental we rarely notice them, like the air we breathe.
+                    </p>
 
-                    {/* Legend */}
-                    <div className="mt-6 space-y-3">
-                        <div className="flex flex-wrap gap-4 justify-center">
-                            {agentTimeSeries && agentTimeSeries.map((agent, idx) => (
-                                <div key={idx} className="flex items-center gap-2">
-                                    <div className="w-4 h-4 rounded" style={{background: agent.color}}></div>
-                                    <span className="text-sm">{agent.name}</span>
-                                    <span className="text-xs text-gray-500">({agent.framework})</span>
-                                </div>
-                            ))}
-                        </div>
-                        <p className="text-xs text-center text-gray-600 italic">
-                            Notice how different frameworks maintain ATCF differently based on I and ε values
+                    <div class="example-box">
+                        <h4>💡 Quick Example</h4>
+                        <p>Consider this situation: <em>"Someone raises their voice at you."</em></p>
+                        <p><strong>Different reference frames create different experiences:</strong></p>
+                        <ul>
+                            <li><strong>Threat frame:</strong> "Danger! I'm being attacked. Fight or flee."</li>
+                            <li><strong>Challenge frame:</strong> "They're passionate about this. We're having an intense debate."</li>
+                            <li><strong>Cultural frame:</strong> "In their culture, this is normal emphasis, not anger."</li>
+                            <li><strong>Medical frame:</strong> "They're having a neurological episode. Call for help."</li>
+                        </ul>
+                        <p><em>Same physical event. Completely different meanings, emotions, and responses depending on your frame.</em></p>
+                    </div>
+
+                    <h3>The Promise</h3>
+                    <p>
+                        Understanding reference frames provides a unified leverage point for addressing challenges from 
+                        personal meaning to global catastrophe. Whether you're:
+                    </p>
+                    <ul>
+                        <li>Struggling with internal conflict or life direction</li>
+                        <li>Navigating difficult relationships or social dynamics</li>
+                        <li>Working on education, therapy, or organizational change</li>
+                        <li>Thinking about inequality, conflict, or existential risks</li>
+                    </ul>
+                    <p>
+                        ...the same fundamental patterns apply. <strong>Reference frames are how we make meaning, 
+                        coordinate action, and either flourish or fragment.</strong>
+                    </p>
+
+                    <div class="warning-box">
+                        <h4>⚠️ This Isn't Just Theory</h4>
+                        <p>
+                            This framework is grounded in empirical science (neuroscience, bioelectricity, psychology) 
+                            and 2,500 years of philosophical wisdom. But more importantly: 
+                            <strong>it's immediately practical.</strong>
+                        </p>
+                        <p>
+                            You'll gain tools you can use today to understand yourself better, navigate challenges more 
+                            effectively, and contribute to systemic change.
                         </p>
                     </div>
+
+                    <h3>How to Use This Platform</h3>
+                    <p><strong>This is an interactive learning journey:</strong></p>
+                    <ol>
+                        <li><strong>Progress sequentially</strong> through sections using the navigation above</li>
+                        <li><strong>Engage with exercises</strong>—they're not optional, they're where real learning happens</li>
+                        <li><strong>Take your time</strong>—this is deep material that builds progressively</li>
+                        <li><strong>Revisit sections</strong>—concepts become clearer with repeated exposure</li>
+                        <li><strong>Apply immediately</strong>—try ideas in your daily life as you learn them</li>
+                    </ol>
+
+                    <div class="interactive-box">
+                        <h4>✅ Ready to Begin?</h4>
+                        <p>This journey will take 60-90 minutes if done in one sitting, but you can also work through 
+                        it in multiple sessions. Your progress is automatically saved.</p>
+                        <p><strong>Click "Basics" in the navigation above to continue.</strong></p>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="markComplete(${index}); showSection(${index + 1})">
+                        Start Learning →
+                    </button>
                 </div>
-            );
+            `;
         }
 
-        // ========== MINIMAL MAIN APP (showing key enhancements) ==========
-        function App() {
-            const [page, setPage] = useState('home');
-            const [scenario, setScenario] = useState(null);
-            const [I, setI] = useState(0.2);
-            const [epsilon, setEpsilon] = useState(0.3);
-            const [results, setResults] = useState(null);
-            const [isRunning, setIsRunning] = useState(false);
-            const [showGlossary, setShowGlossary] = useState(false);
+        function generateBasicsSection(index) {
+            return `
+                <div class="card">
+                    <h2>What Are Reference Frames?</h2>
+                    
+                    <p style="font-size: 1.1rem; font-weight: 600; color: var(--primary);">
+                        A reference frame is the operational structure that determines what information means and enables coordinated action.
+                    </p>
 
-            const handleNavigate = (newPage) => {
-                setPage(newPage);
-                window.scrollTo(0, 0);
-            };
+                    <h3>The Four Key Functions</h3>
+                    <p>Every reference frame specifies:</p>
+                    
+                    <div class="example-box">
+                        <h4>1. What Counts as "The Same"</h4>
+                        <p><strong>Equivalence classes and categories</strong></p>
+                        <p>Example: Your visual system groups many different wavelengths as "blue" despite huge variation. 
+                        It's created an equivalence class: "these diverse inputs count as the same color."</p>
+                    </div>
 
-            const handleSelectScenario = (s) => {
-                setScenario(s);
-                setI(s.defaultI);
-                setEpsilon(s.defaultEpsilon);
-                setResults(null);
-                handleNavigate('simulator');
-            };
+                    <div class="example-box">
+                        <h4>2. What Distinctions Matter</h4>
+                        <p><strong>Which differences make a difference</strong></p>
+                        <p>Example: A radiologist's frame makes tiny shadow differences meaningful (tumor vs. artifact). 
+                        A novice's frame doesn't register these as significant distinctions.</p>
+                    </div>
 
-            const handleRunSimulation = () => {
-                if (!scenario) return;
-                setIsRunning(true);
-                setTimeout(() => {
-                    const modScenario = { ...scenario, defaultI: I, defaultEpsilon: epsilon };
-                    const ensembleResults = runEnhancedSimulation(modScenario, I, epsilon);
-                    setResults(ensembleResults);
-                    setIsRunning(false);
-                }, 500);
-            };
+                    <div class="example-box">
+                        <h4>3. How to Compare</h4>
+                        <p><strong>Standards for measurement across contexts</strong></p>
+                        <p>Example: "The train moves at 100 km/h" is meaningless until you specify: relative to the ground? 
+                        Another train? The sun? Different frames give different velocities for the same physical situation.</p>
+                    </div>
 
-            return (
-                <div className="min-h-screen bg-gray-100">
-                    {/* AI Tutor (always available) */}
-                    <AITutor currentPage={page} scenario={scenario} />
+                    <div class="example-box">
+                        <h4>4. What's Meaningful</h4>
+                        <p><strong>Signal vs. noise, relevant vs. irrelevant</strong></p>
+                        <p>Example: In a crowded room, your attention frame makes your name meaningful (you hear it immediately) 
+                        while filtering out dozens of other conversations as noise.</p>
+                    </div>
 
-                    {/* Navigation */}
-                    <nav className="bg-white shadow-md sticky top-0 z-40">
-                        <div className="max-w-7xl mx-auto px-4">
-                            <div className="flex justify-between items-center h-16">
-                                <button onClick={() => handleNavigate('home')} 
-                                        className="text-xl font-bold text-gray-800 hover:text-blue-600">
-                                    Ethics Lab
-                                </button>
-                                <div className="flex gap-2">
-                                    <button onClick={() => setShowGlossary(!showGlossary)}
-                                            className="px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100">
-                                        📖 Glossary
-                                    </button>
-                                    <button onClick={() => handleNavigate('enhanced-demo')}
-                                            className="px-4 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700">
-                                        🆕 Enhanced Demo
-                                    </button>
-                                </div>
-                            </div>
+                    <div class="interactive-box">
+                        <h4>🧪 Try It: Frame Recognition Exercise</h4>
+                        <p>Think about this scenario:</p>
+                        <p style="font-style: italic; padding: 1rem; background: white; border-radius: 8px;">
+                            "You receive critical feedback on a project you worked hard on."
+                        </p>
+                        <p><strong>What frames could you use to interpret this?</strong></p>
+                        <textarea class="frame-input" id="frameExercise1" placeholder="Type your different possible frames here...
+Example: 
+- Threat frame: 'They don't like me, I'm in danger of being fired'
+- Growth frame: 'This is valuable information to improve my work'
+- Political frame: 'This is about positioning, not actually about quality'
+etc."></textarea>
+                        <button class="btn btn-secondary" onclick="saveFrameExercise(1)">Save Your Reflection</button>
+                        <div id="frameExercise1Feedback" style="margin-top: 1rem; display: none;">
+                            <p style="color: var(--success); font-weight: 600;">✓ Great work! You're beginning to see how multiple frames are always possible.</p>
                         </div>
-                    </nav>
+                    </div>
 
-                    {/* Glossary Panel */}
-                    {showGlossary && (
-                        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" onClick={() => setShowGlossary(false)}>
-                            <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[80vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-                                <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 rounded-t-xl">
-                                    <div className="flex justify-between items-center">
-                                        <h2 className="text-2xl font-bold">📖 Ethics Lab Glossary</h2>
-                                        <button onClick={() => setShowGlossary(false)} className="text-2xl">×</button>
-                                    </div>
+                    <h3>The Key Insight</h3>
+                    <div class="warning-box">
+                        <p style="font-size: 1.1rem; font-weight: 600;">
+                            Information and meaning are always relative to frames.
+                        </p>
+                        <p>
+                            The same physical stimulus, social action, or life event means different things depending 
+                            on the reference frame through which it's interpreted. There's no "view from nowhere"—all 
+                            observation is from some perspective, using some frame.
+                        </p>
+                    </div>
+
+                    <h3>Examples Across Domains</h3>
+
+                    <div class="example-box">
+                        <h4>Physical Science</h4>
+                        <p>Einstein's relativity: velocity, simultaneity, even time itself are relative to reference frames. 
+                        Different observers moving at different speeds literally experience different realities—both valid 
+                        within their frames.</p>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>Perception</h4>
+                        <p>Your "threat" category groups certain situations as equivalent (dark alley, angry dog, raised voice) 
+                        while distinguishing them from "safe" situations. This frame determines your responses—fight, flight, 
+                        freeze, or calm engagement.</p>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>Social Coordination</h4>
+                        <p>Legal systems define reference frames for "assault," "property," "person." What counts as assault 
+                        in one legal frame (unwanted touch) might not in another (contact sports). These frames structure 
+                        social coordination and consequences.</p>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>Personal Meaning</h4>
+                        <p>Consider failure:</p>
+                        <ul>
+                            <li><strong>Fixed frame:</strong> "I failed = I'm a failure = permanent limitation"</li>
+                            <li><strong>Growth frame:</strong> "I failed = this approach didn't work = I can learn"</li>
+                        </ul>
+                        <p>Same event, completely different meaning, emotions, and future actions.</p>
+                    </div>
+
+                    <div class="interactive-box">
+                        <h4>🎯 Quick Check: Do You Understand Frames?</h4>
+                        <div class="quiz-question">
+                            <p><strong>Which statement best captures what a reference frame does?</strong></p>
+                            <div class="quiz-options" id="quiz1">
+                                <div class="quiz-option" onclick="checkAnswer(1, 0, false)">
+                                    A) It's your opinion about something
                                 </div>
-                                <div className="p-6 space-y-6">
-                                    {Object.entries(glossary).map(([key, entry]) => (
-                                        <div key={key} className="border-l-4 border-blue-500 pl-4">
-                                            <h3 className="text-lg font-bold text-gray-800 mb-2">{entry.term}</h3>
-                                            <p className="text-gray-700 mb-2">{entry.definition}</p>
-                                            <div className="bg-blue-50 p-3 rounded">
-                                                <p className="text-sm text-gray-700">
-                                                    <strong className="text-blue-700">Example:</strong> {entry.example}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    ))}
+                                <div class="quiz-option" onclick="checkAnswer(1, 1, false)">
+                                    B) It's the objective truth about a situation
+                                </div>
+                                <div class="quiz-option" onclick="checkAnswer(1, 2, true)">
+                                    C) It determines what information means and what actions are appropriate
+                                </div>
+                                <div class="quiz-option" onclick="checkAnswer(1, 3, false)">
+                                    D) It's a type of photograph
                                 </div>
                             </div>
+                            <div class="quiz-feedback" id="feedback1"></div>
                         </div>
-                    )}
+                    </div>
 
-                    {/* Main Content */}
-                    <main className="max-w-7xl mx-auto px-4 py-8">
-                        {/* HOME */}
-                        {page === 'home' && (
-                            <div className="max-w-4xl mx-auto">
-                                <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg p-8 mb-8">
-                                    <h1 className="text-4xl font-bold mb-4">Ethics Lab - Enhanced Edition</h1>
-                                    <p className="text-xl">Now with AI Tutor, Glossary, and Framework-Aware Simulations!</p>
-                                </div>
+                    <h3>Why This Matters</h3>
+                    <p>
+                        Once you understand reference frames, you can start to:
+                    </p>
+                    <ul>
+                        <li><strong>Notice your frames in action</strong> ("I'm interpreting this as threat—could I use a different frame?")</li>
+                        <li><strong>Recognize others' frames</strong> ("They're not wrong, they're using a different frame")</li>
+                        <li><strong>Choose frames strategically</strong> ("Which frame serves my authentic goals here?")</li>
+                        <li><strong>Coordinate across different frames</strong> ("How can we bridge our different perspectives?")</li>
+                    </ul>
 
-                                <div className="grid md:grid-cols-2 gap-6 mb-8">
-                                    <div className="bg-white rounded-lg shadow-md p-6">
-                                        <h2 className="text-2xl font-semibold mb-3 text-gray-800">🆕 New Features</h2>
-                                        <ul className="space-y-2 text-sm">
-                                            <li className="flex items-start">
-                                                <span className="text-purple-500 mr-2">🤖</span>
-                                                <span><strong>AI Tutor:</strong> Ask questions anytime (bottom right button)</span>
-                                            </li>
-                                            <li className="flex items-start">
-                                                <span className="text-blue-500 mr-2">📖</span>
-                                                <span><strong>Glossary:</strong> Hover over underlined terms or click Glossary button</span>
-                                            </li>
-                                            <li className="flex items-start">
-                                                <span className="text-green-500 mr-2">📊</span>
-                                                <span><strong>Framework-Aware Simulations:</strong> See how different frameworks interact</span>
-                                            </li>
-                                            <li className="flex items-start">
-                                                <span className="text-orange-500 mr-2">👥</span>
-                                                <span><strong>Agent Differentiation:</strong> Each group maintains distinct identity</span>
-                                            </li>
-                                        </ul>
-                                    </div>
+                    <p style="margin-top: 2rem;">
+                        <strong>Next:</strong> We'll explore how frames exist at every scale from cells to civilizations, 
+                        and why cross-scale coordination is the fundamental challenge.
+                    </p>
 
-                                    <div className="bg-white rounded-lg shadow-md p-6">
-                                        <h2 className="text-2xl font-semibold mb-3 text-gray-800">💡 Key Concepts</h2>
-                                        <div className="space-y-2 text-sm">
-                                            <p>
-                                                <GlossaryTerm term="I">Protocol Complexity (I)</GlossaryTerm>: Rules create friction
-                                            </p>
-                                            <p>
-                                                <GlossaryTerm term="epsilon">Tolerance (ε)</GlossaryTerm>: Welcoming difference
-                                            </p>
-                                            <p>
-                                                <GlossaryTerm term="ATCF">ATCF</GlossaryTerm>: Maintaining authentic identity
-                                            </p>
-                                            <p>
-                                                <GlossaryTerm term="functional equivalence">Functional Equivalence</GlossaryTerm>: The key insight
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-6">
-                                    <h2 className="text-2xl font-semibold mb-3 text-gray-800">🎯 Try the Enhanced Demo</h2>
-                                    <p className="text-gray-700 mb-4">
-                                        See the Green Belt Movement with REAL differentiated agents - each with different frameworks, 
-                                        motivations, and reasoning styles. Watch how they maintain authentic identities while coordinating!
-                                    </p>
-                                    <button onClick={() => handleSelectScenario(enhancedGreenBeltScenario)}
-                                            className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 font-semibold">
-                                        Run Enhanced Scenario
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-
-                        {/* ENHANCED DEMO PAGE */}
-                        {page === 'enhanced-demo' && (
-                            <div>
-                                <h1 className="text-3xl font-bold text-gray-800 mb-2">Enhanced Green Belt Movement</h1>
-                                <p className="text-gray-600 mb-6">See how DIFFERENT frameworks coordinate through functional equivalence</p>
-
-                                <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
-                                    <h3 className="font-semibold text-yellow-800 mb-2">📚 Pedagogical Notes:</h3>
-                                    <ul className="text-sm text-yellow-700 space-y-1">
-                                        {enhancedGreenBeltScenario.pedagogicalNotes.map((note, idx) => (
-                                            <li key={idx}>• {note}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-
-                                <div className="grid md:grid-cols-4 gap-4 mb-6">
-                                    {enhancedGreenBeltScenario.agents.map((agent, idx) => (
-                                        <div key={idx} className="bg-white rounded-lg shadow-md p-4 border-l-4" style={{borderColor: agent.color}}>
-                                            <h3 className="font-bold text-gray-800 mb-2">{agent.name}</h3>
-                                            <div className="space-y-2 text-sm">
-                                                <p>
-                                                    <span className="font-semibold text-gray-700">Framework:</span>
-                                                    <br/><span className="text-gray-600">{agent.framework}</span>
-                                                </p>
-                                                <p>
-                                                    <span className="font-semibold text-gray-700">Motivation:</span>
-                                                    <br/><span className="text-gray-600">{agent.motivation}</span>
-                                                </p>
-                                                <p>
-                                                    <span className="font-semibold text-gray-700">Reasoning:</span>
-                                                    <br/><span className="text-gray-600 italic text-xs">{agent.reasoning}</span>
-                                                </p>
-                                                <p>
-                                                    <span className="font-semibold text-gray-700">Decision Style:</span>
-                                                    <br/><span className="text-gray-600 text-xs">{agent.decisionStyle}</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                <button onClick={() => handleSelectScenario(enhancedGreenBeltScenario)}
-                                        className="w-full bg-purple-600 text-white py-4 rounded-lg hover:bg-purple-700 font-bold text-lg mb-6">
-                                    Run Enhanced Simulation →
-                                </button>
-
-                                <div className="bg-blue-50 rounded-lg p-6">
-                                    <h3 className="text-lg font-semibold text-gray-800 mb-3">🔍 What to Watch For:</h3>
-                                    <div className="grid md:grid-cols-2 gap-4 text-sm">
-                                        <div>
-                                            <p className="font-semibold text-blue-800 mb-2">Try LOW I (0.01) + HIGH ε (0.40):</p>
-                                            <ul className="text-gray-700 space-y-1">
-                                                <li>• All groups maintain high ATCF</li>
-                                                <li>• Success rate is high</li>
-                                                <li>• Different colors stay strong</li>
-                                                <li>• This is functional equivalence!</li>
-                                            </ul>
-                                        </div>
-                                        <div>
-                                            <p className="font-semibold text-red-800 mb-2">Try HIGH I (0.4) + LOW ε (0.15):</p>
-                                            <ul className="text-gray-700 space-y-1">
-                                                <li>• ATCF drops (especially Care Ethics)</li>
-                                                <li>• Success rate declines</li>
-                                                <li>• Groups feel compromised</li>
-                                                <li>• Diversity becomes friction</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                        {/* SIMULATOR PAGE */}
-                        {page === 'simulator' && (
-                            <div>
-                                {!scenario ? (
-                                    <div className="max-w-4xl mx-auto text-center py-12">
-                                        <div className="text-6xl mb-4">🎭</div>
-                                        <h2 className="text-2xl font-bold text-gray-800 mb-4">No Scenario Selected</h2>
-                                        <button onClick={() => handleNavigate('enhanced-demo')} 
-                                                className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700">
-                                            Try Enhanced Scenario
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <button onClick={() => handleNavigate('enhanced-demo')} 
-                                                className="text-blue-600 hover:text-blue-800 mb-4">
-                                            ← Back
-                                        </button>
-                                        <h1 className="text-3xl font-bold text-gray-800 mb-2">{scenario.title}</h1>
-                                        <p className="text-gray-600 mb-6">{scenario.period}</p>
-                                        
-                                        <div className="grid lg:grid-cols-3 gap-6">
-                                            <div className="bg-white rounded-lg shadow-md p-6">
-                                                <h2 className="text-xl font-semibold text-gray-800 mb-4">Controls</h2>
-                                                <div className="mb-4 p-3 bg-blue-50 rounded">
-                                                    <p className="text-sm font-semibold text-blue-800 mb-1">Task:</p>
-                                                    <p className="text-sm text-gray-700">{scenario.task.description}</p>
-                                                </div>
-                                                <div className="space-y-6">
-                                                    <div>
-                                                        <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                                            <GlossaryTerm term="I">Protocol Complexity (I)</GlossaryTerm>: {I.toFixed(2)}
-                                                        </label>
-                                                        <input type="range" min="0" max="1" step="0.05" value={I}
-                                                               onChange={(e) => setI(parseFloat(e.target.value))}
-                                                               className="w-full" />
-                                                    </div>
-                                                    <div>
-                                                        <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                                            <GlossaryTerm term="epsilon">Tolerance (ε)</GlossaryTerm>: {epsilon.toFixed(2)}
-                                                        </label>
-                                                        <input type="range" min="0" max="1" step="0.05" value={epsilon}
-                                                               onChange={(e) => setEpsilon(parseFloat(e.target.value))}
-                                                               className="w-full" />
-                                                    </div>
-                                                    <button onClick={handleRunSimulation} disabled={isRunning}
-                                                            className={`w-full py-3 rounded-lg font-semibold ${
-                                                                isRunning 
-                                                                ? 'bg-gray-400 cursor-not-allowed' 
-                                                                : 'bg-blue-600 hover:bg-blue-700'
-                                                            } text-white`}>
-                                                        {isRunning ? 'Running...' : 'Run Simulation'}
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            <div className="lg:col-span-2">
-                                                {!results ? (
-                                                    <div className="bg-white rounded-lg shadow-md p-12 text-center">
-                                                        <div className="text-6xl mb-4">⚙️</div>
-                                                        <h3 className="text-xl font-semibold text-gray-800 mb-2">Ready to Simulate</h3>
-                                                        <p className="text-gray-600">Adjust parameters and run</p>
-                                                    </div>
-                                                ) : (
-                                                    <div className="space-y-6">
-                                                        <div className="bg-white rounded-lg shadow-md p-6">
-                                                            <h3 className="text-xl font-semibold text-gray-800 mb-4">Summary Statistics</h3>
-                                                            <div className="grid grid-cols-3 gap-4">
-                                                                <div className="text-center p-4 bg-blue-50 rounded-lg">
-                                                                    <p className="text-3xl font-bold text-blue-600">
-                                                                        {results.summary.avgSuccessRate.toFixed(0)}%
-                                                                    </p>
-                                                                    <p className="text-sm text-gray-600 mt-1">Success</p>
-                                                                </div>
-                                                                <div className="text-center p-4 bg-green-50 rounded-lg">
-                                                                    <p className="text-3xl font-bold text-green-600">
-                                                                        {(results.summary.avgFinalATCF * 100).toFixed(0)}%
-                                                                    </p>
-                                                                    <p className="text-sm text-gray-600 mt-1">ATCF</p>
-                                                                </div>
-                                                                <div className="text-center p-4 bg-purple-50 rounded-lg">
-                                                                    <p className="text-3xl font-bold text-purple-600">
-                                                                        {results.summary.robustness.toFixed(0)}%
-                                                                    </p>
-                                                                    <p className="text-sm text-gray-600 mt-1">Robust</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div className="bg-white rounded-lg shadow-md p-6">
-                                                            <EnhancedChart 
-                                                                data={results.timeSeriesData} 
-                                                                agentTimeSeries={results.agentTimeSeries}
-                                                                title="Performance Over Time" 
-                                                            />
-                                                        </div>
-
-                                                        <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg p-6">
-                                                            <h3 className="text-lg font-semibold text-gray-800 mb-2">🎯 Learning Goal</h3>
-                                                            <p className="text-gray-700">{scenario.learningGoal}</p>
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-                    </main>
-
-                    <footer className="bg-gray-800 text-white mt-16 py-8">
-                        <div className="max-w-7xl mx-auto px-4 text-center">
-                            <p className="text-gray-400 text-sm">
-                                © 2025 Ethics Lab Enhanced Edition - Now with AI Tutor! 
-                                <br/>Click the 🤖 button to ask questions anytime.
-                            </p>
-                        </div>
-                    </footer>
+                    <button class="btn btn-primary" onclick="markComplete(${index}); showSection(${index + 1})">
+                        Continue to Scale Hierarchy →
+                    </button>
                 </div>
-            );
+            `;
         }
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+        function generateScalesSection(index) {
+            return `
+                <div class="card">
+                    <h2>The Scale Hierarchy</h2>
+                    <p>
+                        Reference frames aren't just cognitive or social—they exist at <strong>every scale of organization</strong>, 
+                        from molecules to civilizations.
+                    </p>
+
+                    <div class="warning-box">
+                        <h4>The Cross-Scale Challenge</h4>
+                        <p>
+                            The hardest problems in human life occur when frames at different scales 
+                            <strong>misalign</strong>. Understanding each scale helps you recognize where coordination 
+                            breaks down—and how to fix it.
+                        </p>
+                    </div>
+
+                    <h3>Interactive Scale Exploration</h3>
+                    <p>Click each level to explore how reference frames operate at that scale:</p>
+
+                    <div class="scale-viz">
+                        <div class="scale-level bio" onclick="toggleScale(this)">
+                            <h4>🧬 Biological Scale: Cells and Tissues</h4>
+                            <p>Bioelectric reference frames specify target patterns</p>
+                            <div class="scale-detail">
+                                <h4>How It Works:</h4>
+                                <p><strong>Michael Levin's research</strong> (empirically robust, replicated) shows cells and tissues 
+                                use bioelectric frames to coordinate:</p>
+                                <ul>
+                                    <li><strong>What counts as correct:</strong> Target morphology (proper head shape, limb position, etc.)</li>
+                                    <li><strong>What counts as error:</strong> Deviations from target that trigger repair</li>
+                                    <li><strong>How to compare:</strong> Bioelectric gradients across cells signal state differences</li>
+                                    <li><strong>What's meaningful:</strong> Signals indicating "pattern is wrong, fix it"</li>
+                                </ul>
+                                <p><strong>Key Finding:</strong> You can <em>reprogram</em> these frames! Temporarily disrupt 
+                                gap junctions, and planaria grow two heads instead of one—permanently. The bioelectric reference 
+                                frame has been reset.</p>
+                                <p><strong>Your Body:</strong> From cells to organs, you're a hierarchy of reference frames 
+                                maintaining coordinated patterns. Disease often means frame misalignment (cancer = cells ignoring 
+                                tissue frame; autoimmune = immune frame misidentifying self).</p>
+                            </div>
+                        </div>
+
+                        <div class="scale-level neural" onclick="toggleScale(this)">
+                            <h4>🧠 Neural Scale: Perception and Cognition</h4>
+                            <p>Sensory, attentional, and conceptual frames</p>
+                            <div class="scale-detail">
+                                <h4>How It Works:</h4>
+                                <p>Your brain constructs multiple levels of reference frames:</p>
+                                <ul>
+                                    <li><strong>Sensory frames:</strong> What counts as "same face" despite angles, lighting, expressions</li>
+                                    <li><strong>Attentional frames:</strong> What features matter right now (color vs. shape, threat vs. opportunity)</li>
+                                    <li><strong>Conceptual frames:</strong> Your categories and beliefs for making sense of experience</li>
+                                    <li><strong>Memory frames:</strong> What counts as "same person" or "same situation" across time</li>
+                                </ul>
+                                <p><strong>Frame Switching:</strong> When you shift tasks, you're switching reference frames. 
+                                "Focus on faces" vs. "focus on text" activates different neural networks—different frames for 
+                                processing the same visual input.</p>
+                                <p><strong>Learning = Frame Development:</strong> Expertise is having more sophisticated frames. 
+                                Radiologist sees meaningful patterns novice can't detect. Not more knowledge alone—different 
+                                frame for categorizing visual information.</p>
+                            </div>
+                        </div>
+
+                        <div class="scale-level personal" onclick="toggleScale(this)">
+                            <h4>👤 Personal Scale: Identity and Meaning</h4>
+                            <p>Your complete phenomenological reference frame (PRF)</p>
+                            <div class="scale-detail">
+                                <h4>Your PRF Includes:</h4>
+                                <ul>
+                                    <li><strong>Beliefs:</strong> Frames for what's true/false, real/unreal, possible/impossible</li>
+                                    <li><strong>Rules:</strong> Frames for what's appropriate, acceptable, required in different contexts</li>
+                                    <li><strong>Ontology:</strong> Frames for what exists, what has moral status, what matters</li>
+                                    <li><strong>Values:</strong> Frames for what's good, meaningful, worth pursuing</li>
+                                    <li><strong>Identity:</strong> Frames for what counts as "me" vs. "not me"</li>
+                                </ul>
+                                <p><strong>Example: Interpreting Failure</strong></p>
+                                <ul>
+                                    <li><em>Fixed mindset frame:</em> "I failed = I'm a failure = permanent limitation"</li>
+                                    <li><em>Growth mindset frame:</em> "I failed = this approach didn't work = learning opportunity"</li>
+                                </ul>
+                                <p>Same event, completely different meaning. Your frame determines your emotional response, 
+                                motivation, and future behavior.</p>
+                                <p><strong>Temporal Coherence (ATCF):</strong> You need coordinated frames across time—past makes sense 
+                                (Historical Continuity), present is aligned (Present Integration), future feels authentic 
+                                (Prospective Coherence), and you can modify frames when needed (Meta-Constructor Capacity).</p>
+                            </div>
+                        </div>
+
+                        <div class="scale-level social" onclick="toggleScale(this)">
+                            <h4>🌍 Social Scale: Institutions and Culture</h4>
+                            <p>Collective reference frames and coordination</p>
+                            <div class="scale-detail">
+                                <h4>How It Works:</h4>
+                                <p>Cultures and institutions are <strong>collective reference frames</strong>—shared agreements 
+                                about meaning and coordination:</p>
+                                <ul>
+                                    <li><strong>Language:</strong> Shared frames assigning meanings to sounds/symbols</li>
+                                    <li><strong>Money:</strong> Collective frame agreeing "this counts as value"</li>
+                                    <li><strong>Laws:</strong> Frames defining permissible/illegal, property/theft, person/non-person</li>
+                                    <li><strong>Norms:</strong> Informal frames for appropriate/inappropriate, respectable/shameful</li>
+                                    <li><strong>Institutions:</strong> Organizations embedding frames in structures and practices</li>
+                                </ul>
+                                <p><strong>Why Groups Conflict:</strong> Often it's not about facts but incompatible frames. 
+                                Same event, interpreted through different cultural/ideological frames, generates completely 
+                                different meanings and appropriate responses.</p>
+                                <p><strong>Social Change = Frame Shifts:</strong> Abolition of slavery, women's suffrage, 
+                                environmental protection—all involved societies examining old frames ("slaves are property," 
+                                "women lack political capacity," "nature is pure resource") and reconstructing toward justice.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="interactive-box" style="margin-top: 2rem;">
+                        <h4>🎯 Reflection: Cross-Scale Misalignment</h4>
+                        <p>Think of a time when you experienced internal conflict or fragmentation. Can you identify 
+                        frames at different scales that were misaligned?</p>
+                        <p><strong>Example:</strong> "My body felt anxious (biological frame: danger), but I believed I was safe 
+                        (cognitive frame: no threat), while my job required appearing calm (social frame: professional composure). 
+                        All three scales misaligned—exhausting internal warfare."</p>
+                        <textarea class="frame-input" id="scaleReflection" 
+                            placeholder="Describe your experience of cross-scale frame misalignment..."></textarea>
+                        <button class="btn btn-secondary" onclick="saveReflection('scale')">Save Reflection</button>
+                    </div>
+
+                    <h3>The Coordination Challenge</h3>
+                    <p>
+                        <strong>Frames must coordinate across all scales for human systems to function.</strong> When they don't:
+                    </p>
+                    <ul>
+                        <li><strong>Personal level:</strong> Internal conflict, fragmentation, suffering (low Present Integration)</li>
+                        <li><strong>Relational level:</strong> Misunderstanding, conflict, inability to coordinate</li>
+                        <li><strong>Institutional level:</strong> Systems producing outcomes nobody wants</li>
+                        <li><strong>Civilizational level:</strong> Short-term frames driving toward long-term catastrophe</li>
+                    </ul>
+
+                    <div class="warning-box">
+                        <h4>Why This Is Fundamental</h4>
+                        <p>
+                            Most major problems—from depression to genocide to climate crisis—involve frame misalignment 
+                            across scales. Understanding where the misalignment occurs suggests where intervention is needed.
+                        </p>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="markComplete(${index}); showSection(${index + 1})">
+                        Continue to Meta-Constructor Capacity →
+                    </button>
+                </div>
+            `;
+        }
+
+        function generateMetaConstructorSection(index) {
+            return `
+                <div class="card">
+                    <h2>Meta-Constructor Capacity</h2>
+                    <p style="font-size: 1.1rem; font-weight: 600; color: var(--primary);">
+                        The ability to examine, evaluate, and modify your own reference frames while maintaining coherent identity
+                    </p>
+
+                    <div class="example-box">
+                        <h4>🔄 The Recursive Magic</h4>
+                        <p>Humans can do something remarkable: <strong>we can think about our thinking, 
+                        question our assumptions, and deliberately change our minds.</strong></p>
+                        <p>We can observe our own frames in action and ask: "Is this frame serving me? 
+                        Could I use a different frame? How can I modify this while staying coherently myself?"</p>
+                        <p><em>This is meta-constructor capacity—and it's what makes development possible.</em></p>
+                    </div>
+
+                    <h3>The Five Core Abilities</h3>
+
+                    <div class="interactive-box">
+                        <h4>1. Observe Your Frames</h4>
+                        <p>Notice when you're operating within a particular frame:</p>
+                        <ul>
+                            <li>"I'm interpreting this as threat right now"</li>
+                            <li>"I'm using my 'work self' frame, not my 'authentic self' frame"</li>
+                            <li>"This belief is organizing my perception and responses"</li>
+                        </ul>
+                        <p><strong>Without this:</strong> You're completely identified with frames, can't see them, trapped in them</p>
+                        <p><strong>With this:</strong> You have distance and choice—frames become tools, not prisons</p>
+                    </div>
+
+                    <div class="interactive-box">
+                        <h4>2. Question Whether Frames Serve You</h4>
+                        <p>Evaluate frames against your authentic values and goals:</p>
+                        <ul>
+                            <li>"Does this belief actually help me flourish?"</li>
+                            <li>"Is this rule appropriate for this context?"</li>
+                            <li>"Does this identity frame reflect who I really am, or who I was told to be?"</li>
+                        </ul>
+                        <p><strong>Without this:</strong> You maintain frames by default, even when harmful</p>
+                        <p><strong>With this:</strong> You can recognize maladaptive frames and become motivated to change</p>
+                    </div>
+
+                    <div class="interactive-box">
+                        <h4>3. Imagine Alternatives</h4>
+                        <p>Generate different possible frames for the same situation:</p>
+                        <ul>
+                            <li>"I see this as failure, but could I frame it as learning?"</li>
+                            <li>"I'm using competitive frame, but could cooperation work better here?"</li>
+                            <li>"What if I tried the frame that person is using?"</li>
+                        </ul>
+                        <p><strong>Without this:</strong> You're stuck with inherited frames, can't conceive alternatives</p>
+                        <p><strong>With this:</strong> You have flexibility and creativity in responding to challenges</p>
+                    </div>
+
+                    <div class="interactive-box">
+                        <h4>4. Modify Frames Deliberately</h4>
+                        <p>Actually change your frames through practice and intention:</p>
+                        <ul>
+                            <li>Therapy modifying threat frames through exposure and reconsolidation</li>
+                            <li>Education installing new conceptual frames through learning</li>
+                            <li>Practice building new habit frames through repetition</li>
+                            <li>Mindfulness creating observer frame that can watch other frames</li>
+                        </ul>
+                        <p><strong>Without this:</strong> You see problems but can't change them</p>
+                        <p><strong>With this:</strong> You're developmentally active, not stuck</p>
+                    </div>
+
+                    <div class="interactive-box">
+                        <h4>5. Integrate Changes While Maintaining Identity</h4>
+                        <p>Change frames without fragmenting or losing yourself:</p>
+                        <ul>
+                            <li>"My beliefs changed radically, but I'm still recognizably me"</li>
+                            <li>"I've grown tremendously, but my core values remain"</li>
+                            <li>"The thread of identity continues despite transformation"</li>
+                        </ul>
+                        <p><strong>Without this:</strong> Change causes fragmentation, identity crisis</p>
+                        <p><strong>With this:</strong> You can develop across lifespan while maintaining coherent self</p>
+                    </div>
+
+                    <h3>Self-Assessment: Your Meta-Constructor Capacity</h3>
+                    <p>Rate yourself honestly on each dimension (0 = never, 10 = consistently):</p>
+
+                    <div class="slider-container">
+                        <label><strong>I can notice my own mental frames in action:</strong></label>
+                        <input type="range" min="0" max="10" value="5" class="slider" id="meta1" 
+                            oninput="updateSliderValue('meta1')">
+                        <div class="slider-labels">
+                            <span>Never notice</span>
+                            <span>Sometimes</span>
+                            <span>Very aware</span>
+                        </div>
+                        <div class="slider-value" id="meta1-value">5</div>
+                    </div>
+
+                    <div class="slider-container">
+                        <label><strong>I question whether my beliefs/patterns serve me:</strong></label>
+                        <input type="range" min="0" max="10" value="5" class="slider" id="meta2"
+                            oninput="updateSliderValue('meta2')">
+                        <div class="slider-labels">
+                            <span>Never question</span>
+                            <span>Sometimes</span>
+                            <span>Regularly examine</span>
+                        </div>
+                        <div class="slider-value" id="meta2-value">5</div>
+                    </div>
+
+                    <div class="slider-container">
+                        <label><strong>I can imagine alternative ways to interpret situations:</strong></label>
+                        <input type="range" min="0" max="10" value="5" class="slider" id="meta3"
+                            oninput="updateSliderValue('meta3')">
+                        <div class="slider-labels">
+                            <span>Stuck in one view</span>
+                            <span>Some flexibility</span>
+                            <span>Very flexible</span>
+                        </div>
+                        <div class="slider-value" id="meta3-value">5</div>
+                    </div>
+
+                    <div class="slider-container">
+                        <label><strong>I actually change my mind when evidence warrants:</strong></label>
+                        <input type="range" min="0" max="10" value="5" class="slider" id="meta4"
+                            oninput="updateSliderValue('meta4')">
+                        <div class="slider-labels">
+                            <span>Very rigid</span>
+                            <span>Somewhat open</span>
+                            <span>Eagerly update</span>
+                        </div>
+                        <div class="slider-value" id="meta4-value">5</div>
+                    </div>
+
+                    <div class="slider-container">
+                        <label><strong>I maintain identity coherence through changes:</strong></label>
+                        <input type="range" min="0" max="10" value="5" class="slider" id="meta5"
+                            oninput="updateSliderValue('meta5')">
+                        <div class="slider-labels">
+                            <span>Changes fragment me</span>
+                            <span>Usually okay</span>
+                            <span>Strong coherence</span>
+                        </div>
+                        <div class="slider-value" id="meta5-value">5</div>
+                    </div>
+
+                    <button class="btn btn-secondary" onclick="calculateMetaScore()" style="margin-top: 1rem;">
+                        Calculate My Meta-Constructor Score
+                    </button>
+                    <div id="metaScore" style="display: none; margin-top: 1rem;"></div>
+
+                    <h3>Why It Can Be Low</h3>
+                    <div class="warning-box">
+                        <h4>Defensive Rigidity (Protection, Not Weakness)</h4>
+                        <p>Low meta-constructor capacity often develops as <strong>adaptive response to threat</strong>:</p>
+                        <ul>
+                            <li><strong>Trauma:</strong> Examining certain frames feels dangerous, triggers flashbacks</li>
+                            <li><strong>Identity protection:</strong> Core beliefs feel like "me"—questioning them feels like dying</li>
+                            <li><strong>Social pressure:</strong> Your community forbids questioning certain frames</li>
+                            <li><strong>Cognitive load:</strong> You're so stressed that meta-level thinking is impossible</li>
+                        </ul>
+                        <p><em>This isn't a moral failing. It's often protection that once served you but now limits you.</em></p>
+                    </div>
+
+                    <h3>How to Develop It</h3>
+                    <p><strong>Meta-constructor capacity can be cultivated through practice:</strong></p>
+                    <ul>
+                        <li><strong>Therapy:</strong> Especially approaches that work with beliefs and patterns (CBT, schema therapy, IFS)</li>
+                        <li><strong>Meditation:</strong> Builds observer capacity—watching thoughts without identifying with them</li>
+                        <li><strong>Philosophy/Critical Thinking:</strong> Practice examining assumptions and arguments</li>
+                        <li><strong>Diverse Perspectives:</strong> Engaging with people who think very differently</li>
+                        <li><strong>Journaling:</strong> Writing about beliefs, patterns, changes over time</li>
+                        <li><strong>Feedback from Trusted Others:</strong> They see our blind spots</li>
+                    </ul>
+
+                    <div class="example-box">
+                        <h4>💡 The Recursive Achievement</h4>
+                        <p>Here's the beautiful part: <strong>You can use your meta-constructor capacity to improve 
+                        your meta-constructor capacity.</strong></p>
+                        <p>You can examine your capacity to examine yourself, learn how to learn better, think about 
+                        how you think. Each iteration builds on the previous one.</p>
+                        <p>This is why humans can develop across entire lifespans—we're not stuck with our initial 
+                        programming. We can reprogram ourselves.</p>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="markComplete(${index}); showSection(${index + 1})">
+                        Continue to Temporal Coherence →
+                    </button>
+                </div>
+            `;
+        }
+
+        function generateATCFSection(index) {
+            return `
+                <div class="card">
+                    <h2>Temporal Coherence (ATCF)</h2>
+                    <p style="font-size: 1.1rem; font-weight: 600; color: var(--primary);">
+                        How well your reference frames maintain coherent identity across past, present, and future
+                    </p>
+
+                    <p>
+                        Meta-constructor capacity (examining and modifying frames) is necessary but not sufficient. 
+                        You also need frames that <strong>cohere across time</strong>—your past makes sense, your present 
+                        is aligned, your future is authentic, and you can change while staying yourself.
+                    </p>
+
+                    <div class="warning-box">
+                        <h4>What ATCF Measures</h4>
+                        <p><strong>ATCF = Adaptive Temporal Coherence Function</strong></p>
+                        <p>It's not a single score but four interconnected components that together determine 
+                        whether you can maintain coherent identity while developing across time.</p>
+                    </div>
+
+                    <h3>The Four Components</h3>
+
+                    <div class="interactive-box">
+                        <h4>1. Historical Continuity</h4>
+                        <p><strong>Can you recognize yourself across time?</strong></p>
+                        <p><em>Your past makes coherent sense as part of your story</em></p>
+                        
+                        <p><strong>High Historical Continuity looks like:</strong></p>
+                        <ul>
+                            <li>Your life story feels connected and meaningful</li>
+                            <li>Difficult periods are integrated, not blank or dissociated</li>
+                            <li>You can see thread of "you" across changes</li>
+                            <li>Past informs present without imprisoning you</li>
+                        </ul>
+
+                        <p><strong>Low Historical Continuity looks like:</strong></p>
+                        <ul>
+                            <li>Gaps or blank periods in memory</li>
+                            <li>Past feels alien, like "that wasn't really me"</li>
+                            <li>Fragmented narrative, can't tell coherent story</li>
+                            <li>Unintegrated trauma disrupting continuity</li>
+                        </ul>
+
+                        <p><strong>Quick self-check:</strong> "The person I was 10 years ago is fundamentally me, 
+                        despite changes" (agree = high, disagree = low)</p>
+                    </div>
+
+                    <div class="interactive-box">
+                        <h4>2. Present Integration</h4>
+                        <p><strong>Do you make sense to yourself right now?</strong></p>
+                        <p><em>Current frames across levels are aligned and coordinated</em></p>
+                        
+                        <p><strong>High Present Integration looks like:</strong></p>
+                        <ul>
+                            <li>Actions match stated values</li>
+                            <li>Body, mind, and behavior aligned</li>
+                            <li>Can be authentic across contexts</li>
+                            <li>Internal coherence, not warring parts</li>
+                        </ul>
+
+                        <p><strong>Low Present Integration looks like:</strong></p>
+                        <ul>
+                            <li>"I say I value X but do Y constantly"</li>
+                            <li>Body says danger, mind says safe (chronic misalignment)</li>
+                            <li>Different "selves" in different contexts (work-me vs. real-me)</li>
+                            <li>Constant internal conflict and fragmentation</li>
+                        </ul>
+
+                        <p><strong>Quick self-check:</strong> "My actions this week aligned with what matters most to me" 
+                        (agree = high, disagree = low)</p>
+                    </div>
+
+                    <div class="interactive-box">
+                        <h4>3. Prospective Coherence</h4>
+                        <p><strong>Can you imagine an authentic future?</strong></p>
+                        <p><em>Future self feels connected to present identity and values</em></p>
+                        
+                        <p><strong>High Prospective Coherence looks like:</strong></p>
+                        <ul>
+                            <li>Can vividly imagine future that feels like "you"</li>
+                            <li>Goals aligned with authentic identity, not absorbed</li>
+                            <li>Hope and agency about future trajectory</li>
+                            <li>Can see path from here to there</li>
+                        </ul>
+
+                        <p><strong>Low Prospective Coherence looks like:</strong></p>
+                        <ul>
+                            <li>Future feels blank, can't imagine continuing</li>
+                            <li>Goals feel alien (dentistry when you want music)</li>
+                            <li>Despair, no hope for meaningful future</li>
+                            <li>Can't see yourself in imagined futures</li>
+                        </ul>
+
+                        <p><strong>Quick self-check:</strong> "I can clearly imagine myself 5 years from now in a way that 
+                        feels authentic" (yes = high, no = low)</p>
+                    </div>
+
+                    <div class="interactive-box">
+                        <h4>4. Meta-Constructor Capacity</h4>
+                        <p><strong>Can you change while remaining yourself?</strong></p>
+                        <p><em>Ability to examine and modify frames while maintaining identity</em></p>
+                        
+                        <p>(We covered this in detail in the previous section!)</p>
+                        <p><strong>Quick reminder:</strong> Can you notice your frames, question them, imagine alternatives, 
+                        modify deliberately, and integrate changes without fragmenting?</p>
+                    </div>
+
+                    <h3>Your ATCF Self-Assessment</h3>
+                    <p>Rate yourself honestly on each component (1 = very low, 10 = very high):</p>
+
+                    <div class="slider-container">
+                        <label><strong>Historical Continuity:</strong> My past makes coherent sense as part of my story</label>
+                        <input type="range" min="1" max="10" value="5" class="slider" id="atcf1" 
+                            oninput="updateSliderValue('atcf1')">
+                        <div class="slider-value" id="atcf1-value">5</div>
+                    </div>
+
+                    <div class="slider-container">
+                        <label><strong>Present Integration:</strong> My actions, values, and different roles are aligned</label>
+                        <input type="range" min="1" max="10" value="5" class="slider" id="atcf2"
+                            oninput="updateSliderValue('atcf2')">
+                        <div class="slider-value" id="atcf2-value">5</div>
+                    </div>
+
+                    <div class="slider-container">
+                        <label><strong>Prospective Coherence:</strong> I can imagine an authentic future that feels like me</label>
+                        <input type="range" min="1" max="10" value="5" class="slider" id="atcf3"
+                            oninput="updateSliderValue('atcf3')">
+                        <div class="slider-value" id="atcf3-value">5</div>
+                    </div>
+
+                    <div class="slider-container">
+                        <label><strong>Meta-Constructor Capacity:</strong> I can examine and modify my frames while staying myself</label>
+                        <input type="range" min="1" max="10" value="5" class="slider" id="atcf4"
+                            oninput="updateSliderValue('atcf4')">
+                        <div class="slider-value" id="atcf4-value">5</div>
+                    </div>
+
+                    <button class="btn btn-secondary" onclick="calculateATCF()" style="margin-top: 1rem;">
+                        Calculate My ATCF Profile
+                    </button>
+                    <div id="atcfResults" style="display: none; margin-top: 1rem;"></div>
+
+                    <div class="warning-box" style="margin-top: 2rem;">
+                        <h4>⚠️ Important Note</h4>
+                        <p>This is <strong>informal self-reflection</strong>, not clinical assessment. The numbers 
+                        help you think about patterns, but your lived experience is primary.</p>
+                        <p>If your total score is below 20 (average of 5 per component), or if you're experiencing 
+                        significant distress, consider seeking professional support.</p>
+                    </div>
+
+                    <h3>Why All Four Matter</h3>
+                    <p>The four components work together as a system. Problems in one affect the others:</p>
+                    <ul>
+                        <li><strong>Low Historical Continuity</strong> → harder to maintain Present Integration (unintegrated 
+                        past keeps intruding) and Prospective Coherence (can't build future on fragmented past)</li>
+                        <li><strong>Low Present Integration</strong> → harder to project authentic future (which self's future?)</li>
+                        <li><strong>Low Prospective Coherence</strong> → harder to stay motivated in present (why bother if 
+                        no meaningful future?)</li>
+                        <li><strong>Low Meta-Constructor</strong> → can't fix problems in other components (stuck with whatever 
+                        you have)</li>
+                    </ul>
+
+                    <p><strong>High ATCF = All four functioning well together</strong> = You can flourish, develop, 
+                    and coordinate effectively across time and with diverse others.</p>
+
+                    <button class="btn btn-primary" onclick="markComplete(${index}); showSection(${index + 1})">
+                        Continue to Applications →
+                    </button>
+                </div>
+            `;
+        }
+
+        function generateApplicationsSection(index) {
+            return `
+                <div class="card">
+                    <h2>Real-World Applications</h2>
+                    <p>
+                        Reference frame thinking provides leverage for addressing challenges from personal meaning 
+                        to global crises. Click each area to explore applications:
+                    </p>
+
+                    <div class="app-grid">
+                        <div class="app-card" onclick="showApplication('inequality')">
+                            <div class="icon">💰</div>
+                            <h4>Income Inequality</h4>
+                            <p>When economic frames override human frames</p>
+                        </div>
+
+                        <div class="app-card" onclick="showApplication('discrimination')">
+                            <div class="icon">⚖️</div>
+                            <h4>Discrimination</h4>
+                            <p>When categorical frames override individual reality</p>
+                        </div>
+
+                        <div class="app-card" onclick="showApplication('conflict')">
+                            <div class="icon">🕊️</div>
+                            <h4>War & Genocide</h4>
+                            <p>When group identity frames override common humanity</p>
+                        </div>
+
+                        <div class="app-card" onclick="showApplication('existential')">
+                            <div class="icon">🌍</div>
+                            <h4>Existential Risks</h4>
+                            <p>When temporal frames misalign with reality</p>
+                        </div>
+
+                        <div class="app-card" onclick="showApplication('meaning')">
+                            <div class="icon">🎯</div>
+                            <h4>Personal Meaning</h4>
+                            <p>When frames align with authentic values</p>
+                        </div>
+
+                        <div class="app-card" onclick="showApplication('therapy')">
+                            <div class="icon">🧠</div>
+                            <h4>Therapy & Healing</h4>
+                            <p>Frame reconstruction for recovery</p>
+                        </div>
+                    </div>
+
+                    <div id="applicationDetails" style="display: none; margin-top: 2rem;">
+                        <!-- Application details will be inserted here -->
+                    </div>
+
+                    <div class="warning-box" style="margin-top: 2rem;">
+                        <h4>🔑 The Unifying Pattern</h4>
+                        <p>
+                            Notice what all these applications share: <strong>Problems emerge from frame misalignment 
+                            or inappropriate frames. Solutions involve frame awareness, examination, and reconstruction.</strong>
+                        </p>
+                        <p>
+                            Whether it's personal depression or global climate crisis, the pattern is the same: 
+                            Frames determine meaning and action. Better frames → better outcomes.
+                        </p>
+                    </div>
+
+                    <h3>What Makes This Practical</h3>
+                    <p>Understanding reference frames gives you:</p>
+                    <ul>
+                        <li><strong>Diagnostic clarity:</strong> "Where exactly is the frame problem?"</li>
+                        <li><strong>Intervention points:</strong> "Which frame needs to change?"</li>
+                        <li><strong>Coordination strategies:</strong> "How can we bridge different frames?"</li>
+                        <li><strong>Developmental pathways:</strong> "How do we build better frames?"</li>
+                    </ul>
+
+                    <div class="interactive-box">
+                        <h4>🎯 Your Turn: Apply Frame Analysis</h4>
+                        <p>Think of a problem you're currently facing—personal, relational, professional, or social.</p>
+                        <p><strong>Analyze it through the reference frame lens:</strong></p>
+                        <ul>
+                            <li>What frames are operating? (Yours? Others? Institutional?)</li>
+                            <li>Are frames misaligned across scales or people?</li>
+                            <li>Which frame is causing the problem?</li>
+                            <li>What alternative frame might work better?</li>
+                            <li>How could you shift to that frame?</li>
+                        </ul>
+                        <textarea class="frame-input" id="problemAnalysis" 
+                            placeholder="Describe your problem and analyze the reference frames involved..."></textarea>
+                        <button class="btn btn-secondary" onclick="saveAnalysis('problem')">Save Your Analysis</button>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="markComplete(${index}); showSection(${index + 1})">
+                        Continue to Personal Practice →
+                    </button>
+                </div>
+            `;
+        }
+
+        function generatePracticeSection(index) {
+            return `
+                <div class="card">
+                    <h2>Personal Practice: Daily Frame Work</h2>
+                    <p>
+                        Understanding frames intellectually is valuable. But <strong>developing frame literacy through 
+                        practice</strong> is transformative. Here are evidence-based practices you can start today.
+                    </p>
+
+                    <h3>Morning Frame-Setting (5 minutes)</h3>
+                    <div class="interactive-box">
+                        <h4>🌅 Start Your Day with Intention</h4>
+                        <p><strong>Ask yourself:</strong></p>
+                        <ul>
+                            <li>"What frame am I bringing to today?"</li>
+                            <li>"What matters most? (What will I treat as signal vs. noise?)"</li>
+                            <li>"Who am I being today?" (Identity frame selection)</li>
+                            <li>"What challenges might trigger automatic frames I want to avoid?"</li>
+                        </ul>
+                        <p><strong>Why this works:</strong> Explicit frame-setting increases awareness and choice. 
+                        You're less likely to operate on autopilot.</p>
+                    </div>
+
+                    <h3>Moment-to-Moment Frame Awareness</h3>
+                    <div class="interactive-box">
+                        <h4>⏱️ Throughout Your Day</h4>
+                        <p><strong>When you notice strong emotion or reaction:</strong></p>
+                        <ol>
+                            <li><strong>Pause:</strong> Don't act immediately</li>
+                            <li><strong>Notice:</strong> "What frame am I in right now?"</li>
+                            <li><strong>Name it:</strong> "Threat frame" / "Scarcity frame" / "Perfectionist frame"</li>
+                            <li><strong>Ask:</strong> "Is this frame serving me here?"</li>
+                            <li><strong>Consider:</strong> "What other frame could I try?"</li>
+                            <li><strong>Experiment:</strong> Shift frames and notice what changes</li>
+                        </ol>
+                        <p><strong>Start small:</strong> Try this once per day. Build the habit gradually.</p>
+                    </div>
+
+                    <h3>Evening Frame Review (10 minutes)</h3>
+                    <div class="interactive-box">
+                        <h4>🌙 End-of-Day Reflection</h4>
+                        <p><strong>Journal on these questions:</strong></p>
+                        <ul>
+                            <li><strong>Historical Continuity check:</strong> "What happened today that connects to my story? 
+                            What can I learn from past experiences?"</li>
+                            <li><strong>Present Integration check:</strong> "When was I aligned today? When fragmented? 
+                            Did my actions match my values?"</li>
+                            <li><strong>Prospective Coherence check:</strong> "Am I moving toward authentic future? 
+                            What small step can I take tomorrow?"</li>
+                            <li><strong>Meta-Constructor development:</strong> "What did I learn about my frames today? 
+                            What would I do differently?"</li>
+                        </ul>
+                    </div>
+
+                    <h3>Weekly Practices</h3>
+
+                    <div class="example-box">
+                        <h4>📝 Weekly Frame Journal</h4>
+                        <p><strong>Every Sunday (or your preferred day):</strong></p>
+                        <ul>
+                            <li>List frames you used most this week</li>
+                            <li>Note which served you well, which didn't</li>
+                            <li>Identify one frame you want to develop or modify</li>
+                            <li>Plan specific experiments for next week</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>👥 Frame Dialogue</h4>
+                        <p><strong>With trusted friend, partner, or therapist:</strong></p>
+                        <ul>
+                            <li>Share your frame observations</li>
+                            <li>Ask: "What frames do you see me using?"</li>
+                            <li>Practice perspective-taking: "Help me understand your frame on this"</li>
+                            <li>Explore: "How could we coordinate across our different frames?"</li>
+                        </ul>
+                    </div>
+
+                    <h3>Specific Development Practices</h3>
+
+                    <div class="interactive-box">
+                        <h4>For Building Meta-Constructor Capacity:</h4>
+                        <ul>
+                            <li><strong>Mindfulness meditation:</strong> Watch thoughts without identifying with them (20 min daily)</li>
+                            <li><strong>Perspective-taking:</strong> Deliberately try on others' frames (daily practice)</li>
+                            <li><strong>Belief examination:</strong> Question one assumption per week</li>
+                            <li><strong>Cognitive flexibility games:</strong> "How else could I see this?" (whenever triggered)</li>
+                        </ul>
+                    </div>
+
+                    <div class="interactive-box">
+                        <h4>For Improving Present Integration:</h4>
+                        <ul>
+                            <li><strong>Body awareness:</strong> Notice body sensations and what frame they suggest (several times daily)</li>
+                            <li><strong>Values-behavior tracking:</strong> Check actions against stated values (nightly)</li>
+                            <li><strong>Role examination:</strong> Notice when you shift between "selves" and whether that's authentic</li>
+                            <li><strong>Reduce fragmentation sources:</strong> Say no to commitments that force inauthenticity</li>
+                        </ul>
+                    </div>
+
+                    <div class="interactive-box">
+                        <h4>For Enhancing Prospective Coherence:</h4>
+                        <ul>
+                            <li><strong>Future self-visualization:</strong> Spend 10 minutes imagining 5-years-ahead you (weekly)</li>
+                            <li><strong>Goal-identity alignment:</strong> Check if goals feel authentically yours (monthly)</li>
+                            <li><strong>Small experiments:</strong> Try activities related to possible futures to see what feels right</li>
+                            <li><strong>Hope cultivation:</strong> Identify one thing today that moves toward authentic future</li>
+                        </ul>
+                    </div>
+
+                    <div class="warning-box">
+                        <h4>⚠️ Important Reminders</h4>
+                        <ul>
+                            <li><strong>Start small:</strong> Pick ONE practice to begin with, not all at once</li>
+                            <li><strong>Be patient:</strong> Frame literacy develops over months and years, not days</li>
+                            <li><strong>Self-compassion:</strong> You'll forget, regress, struggle—that's normal</li>
+                            <li><strong>Seek support:</strong> This work is easier with help (therapy, coaching, community)</li>
+                            <li><strong>Know your limits:</strong> If frames are trauma-related, work with professional</li>
+                        </ul>
+                    </div>
+
+                    <div class="interactive-box">
+                        <h4>🎯 Your Starting Practice</h4>
+                        <p>Which practice will you start with? Choose ONE and commit to 2 weeks:</p>
+                        <select id="startingPractice" class="frame-input" onchange="saveStartingPractice()">
+                            <option value="">Select a practice...</option>
+                            <option value="morning">Morning frame-setting (5 min daily)</option>
+                            <option value="moment">Moment-to-moment awareness (when triggered)</option>
+                            <option value="evening">Evening review (10 min daily)</option>
+                            <option value="weekly">Weekly frame journal</option>
+                            <option value="mindfulness">Mindfulness meditation (20 min daily)</option>
+                            <option value="perspective">Perspective-taking practice (daily)</option>
+                            <option value="future">Future self-visualization (weekly)</option>
+                        </select>
+                        <div id="practiceCommitment" style="display: none; margin-top: 1rem;"></div>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="markComplete(${index}); showSection(${index + 1})">
+                        Create Your Action Plan →
+                    </button>
+                </div>
+            `;
+        }
+
+        function generateActionPlanSection(index) {
+            return `
+                <div class="card">
+                    <h2>Your Personal Action Plan</h2>
+                    <p>
+                        Let's create a concrete, personalized plan for developing your frame literacy. 
+                        This isn't abstract theory—this is your roadmap for practical change.
+                    </p>
+
+                    <div class="interactive-box">
+                        <h4>📊 Your Current Profile Summary</h4>
+                        <div id="profileSummary">
+                            <p><em>Complete the self-assessments in previous sections to see your profile here.</em></p>
+                        </div>
+                    </div>
+
+                    <h3>Step 1: Identify Your Development Priority</h3>
+                    <p>Based on your self-assessments and lived experience, what needs most attention?</p>
+                    <div class="interactive-box">
+                        <select id="priority" class="frame-input" onchange="generateCustomPlan()">
+                            <option value="">Select your priority...</option>
+                            <option value="meta">Developing Meta-Constructor Capacity (examining and modifying frames)</option>
+                            <option value="historical">Improving Historical Continuity (integrating past)</option>
+                            <option value="present">Enhancing Present Integration (aligning across levels)</option>
+                            <option value="prospective">Building Prospective Coherence (authentic future vision)</option>
+                            <option value="relationships">Improving coordination across different frames (relationships)</option>
+                            <option value="systemic">Contributing to systemic/institutional frame work</option>
+                        </select>
+                    </div>
+
+                    <div id="customPlan" style="display: none; margin-top: 2rem;">
+                        <!-- Custom plan will be generated here -->
+                    </div>
+
+                    <h3>Step 2: Your 30-Day Frame Development Plan</h3>
+                    <div id="actionItems">
+                        <div class="action-item">
+                            <input type="checkbox" class="action-checkbox" onchange="toggleAction(this)">
+                            <div class="action-text">
+                                <strong>Week 1:</strong> Choose one daily practice and commit to it (morning frame-setting, 
+                                evening review, or moment-to-moment awareness)
+                            </div>
+                        </div>
+
+                        <div class="action-item">
+                            <input type="checkbox" class="action-checkbox" onchange="toggleAction(this)">
+                            <div class="action-text">
+                                <strong>Week 1-2:</strong> Notice and name your frames throughout the day. Don't try to change 
+                                them yet—just build awareness. "I'm in threat frame." "I'm using perfectionist frame."
+                            </div>
+                        </div>
+
+                        <div class="action-item">
+                            <input type="checkbox" class="action-checkbox" onchange="toggleAction(this)">
+                            <div class="action-text">
+                                <strong>Week 2:</strong> Start a frame journal. Daily or weekly, your choice. Track: 
+                                What frames did I use? When did they serve me? When did they not?
+                            </div>
+                        </div>
+
+                        <div class="action-item">
+                            <input type="checkbox" class="action-checkbox" onchange="toggleAction(this)">
+                            <div class="action-text">
+                                <strong>Week 3:</strong> Practice perspective-taking. Choose someone whose frame differs from yours. 
+                                Seriously try to understand their frame, not to agree but to comprehend.
+                            </div>
+                        </div>
+
+                        <div class="action-item">
+                            <input type="checkbox" class="action-checkbox" onchange="toggleAction(this)">
+                            <div class="action-text">
+                                <strong>Week 3-4:</strong> Experiment with deliberately shifting frames. When you notice unhelpful 
+                                frame, try asking: "What other frame could I use?" Actually try it.
+                            </div>
+                        </div>
+
+                        <div class="action-item">
+                            <input type="checkbox" class="action-checkbox" onchange="toggleAction(this)">
+                            <div class="action-text">
+                                <strong>Week 4:</strong> Review your month. What changed? What's easier? What's still difficult? 
+                                Adjust plan for next month based on learning.
+                            </div>
+                        </div>
+
+                        <div class="action-item">
+                            <input type="checkbox" class="action-checkbox" onchange="toggleAction(this)">
+                            <div class="action-text">
+                                <strong>Optional:</strong> Share this framework with one trusted person (friend, partner, therapist). 
+                                Ask them to support your development and give feedback.
+                            </div>
+                        </div>
+
+                        <div class="action-item">
+                            <input type="checkbox" class="action-checkbox" onchange="toggleAction(this)">
+                            <div class="action-text">
+                                <strong>Optional:</strong> Re-visit this web app monthly to refresh concepts and assess progress.
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Step 3: When to Seek Additional Support</h3>
+                    <div class="warning-box">
+                        <h4>Consider Professional Help If:</h4>
+                        <ul>
+                            <li>Your ATCF self-assessment was very low (average below 4 per component)</li>
+                            <li>You're experiencing significant distress, depression, or anxiety</li>
+                            <li>Frame rigidity seems trauma-related (examination triggers intense fear)</li>
+                            <li>You've tried self-work for 2-3 months with no improvement</li>
+                            <li>You're struggling with major life transitions or crises</li>
+                        </ul>
+                        <p><strong>Frame work can complement but doesn't replace professional mental health care.</strong></p>
+                    </div>
+
+                    <h3>Resources for Continued Learning</h3>
+                    <div class="resource-list">
+                        <div class="resource-item">
+                            <span><strong>Complete Essay:</strong> "Reference Frames: A Unified Lens"</span>
+                            <button class="btn btn-outline" onclick="alert('This would download/link to the full essay')">
+                                Download PDF
+                            </button>
+                        </div>
+                        <div class="resource-item">
+                            <span><strong>Further Reading:</strong> Theoretical foundations and research</span>
+                            <button class="btn btn-outline" onclick="alert('This would link to bibliography')">
+                                View Bibliography
+                            </button>
+                        </div>
+                        <div class="resource-item">
+                            <span><strong>Community:</strong> Connect with others doing frame work</span>
+                            <button class="btn btn-outline" onclick="alert('This would link to community forum/Discord')">
+                                Join Community
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="example-box" style="margin-top: 2rem;">
+                        <h4>🎉 Congratulations!</h4>
+                        <p>You've completed the Reference Frames learning journey. You now understand:</p>
+                        <ul>
+                            <li>What reference frames are and why they matter</li>
+                            <li>How frames operate across scales from cells to civilizations</li>
+                            <li>Meta-constructor capacity and temporal coherence</li>
+                            <li>Applications to real-world challenges</li>
+                            <li>Practical tools for daily frame work</li>
+                        </ul>
+                        <p><strong>The real work begins now—in your daily practice and lived experience.</strong></p>
+                    </div>
+
+                    <button class="btn btn-success" onclick="markComplete(${index}); downloadProgress()">
+                        ✓ Complete Journey & Download Progress
+                    </button>
+                </div>
+            `;
+        }
+
+        // Utility Functions
+
+        function toggleScale(element) {
+            element.classList.toggle('expanded');
+        }
+
+        function updateSliderValue(id) {
+            const slider = document.getElementById(id);
+            const display = document.getElementById(id + '-value');
+            display.textContent = slider.value;
+        }
+
+        function checkAnswer(quizNum, optionIndex, isCorrect) {
+            const quiz = document.getElementById(`quiz${quizNum}`);
+            const feedback = document.getElementById(`feedback${quizNum}`);
+            const options = quiz.querySelectorAll('.quiz-option');
+            
+            options.forEach((opt, i) => {
+                opt.style.pointerEvents = 'none';
+                if (i === optionIndex) {
+                    opt.classList.add(isCorrect ? 'correct' : 'incorrect');
+                }
+            });
+
+            feedback.classList.add('show', isCorrect ? 'correct' : 'incorrect');
+            feedback.innerHTML = isCorrect 
+                ? '✓ <strong>Correct!</strong> Reference frames determine what information means and what actions make sense—they\'re operational structures, not just opinions or facts.'
+                : '✗ <strong>Not quite.</strong> Reference frames are more than opinions or truth claims—they\'re the operational structures that determine what information means and enables action. Try again by revisiting the section!';
+        }
+
+        function saveFrameExercise(num) {
+            const input = document.getElementById(`frameExercise${num}`);
+            const feedback = document.getElementById(`frameExercise${num}Feedback`);
+            if (input.value.trim()) {
+                state.userNotes[`frameExercise${num}`] = input.value;
+                saveState();
+                feedback.style.display = 'block';
+            }
+        }
+
+        function saveReflection(type) {
+            const input = document.getElementById(`${type}Reflection`);
+            if (input && input.value.trim()) {
+                state.userNotes[`${type}Reflection`] = input.value;
+                saveState();
+                alert('✓ Reflection saved!');
+            }
+        }
+
+        function saveAnalysis(type) {
+            const input = document.getElementById(`${type}Analysis`);
+            if (input && input.value.trim()) {
+                state.userNotes[`${type}Analysis`] = input.value;
+                saveState();
+                alert('✓ Analysis saved!');
+            }
+        }
+
+        function calculateMetaScore() {
+            const scores = [];
+            for (let i = 1; i <= 5; i++) {
+                scores.push(parseInt(document.getElementById(`meta${i}`).value));
+            }
+            const avg = scores.reduce((a, b) => a + b) / scores.length;
+            const total = scores.reduce((a, b) => a + b);
+
+            let interpretation = '';
+            if (avg >= 8) {
+                interpretation = '<strong>High Meta-Constructor Capacity</strong> - You have strong ability to examine and modify your frames while maintaining coherence. Continue developing through practice.';
+            } else if (avg >= 6) {
+                interpretation = '<strong>Moderate Meta-Constructor Capacity</strong> - You have decent flexibility but room for growth. Focus on the dimensions where you scored lower.';
+            } else if (avg >= 4) {
+                interpretation = '<strong>Developing Meta-Constructor Capacity</strong> - You\'re building this skill but still find it challenging. Regular practice will help, consider working with therapist or coach.';
+            } else {
+                interpretation = '<strong>Low Meta-Constructor Capacity</strong> - You may be stuck in rigid patterns or protected by defensive frames. Professional support could be very helpful.';
+            }
+
+            const scoreDiv = document.getElementById('metaScore');
+            scoreDiv.innerHTML = `
+                <div class="interactive-box">
+                    <h4>Your Meta-Constructor Profile</h4>
+                    <p><strong>Total Score: ${total}/50 (Average: ${avg.toFixed(1)}/10)</strong></p>
+                    <p>${interpretation}</p>
+                    <p><strong>Individual Scores:</strong></p>
+                    <ul>
+                        <li>Observe frames: ${scores[0]}/10</li>
+                        <li>Question frames: ${scores[1]}/10</li>
+                        <li>Imagine alternatives: ${scores[2]}/10</li>
+                        <li>Modify deliberately: ${scores[3]}/10</li>
+                        <li>Maintain coherence: ${scores[4]}/10</li>
+                    </ul>
+                </div>
+            `;
+            scoreDiv.style.display = 'block';
+
+            state.quizScores.metaConstructor = { total, avg, scores };
+            saveState();
+        }
+
+        function calculateATCF() {
+            const scores = [];
+            for (let i = 1; i <= 4; i++) {
+                scores.push(parseInt(document.getElementById(`atcf${i}`).value));
+            }
+            const total = scores.reduce((a, b) => a + b);
+            const avg = total / 4;
+
+            const components = [
+                'Historical Continuity',
+                'Present Integration',
+                'Prospective Coherence',
+                'Meta-Constructor Capacity'
+            ];
+
+            const lowest = Math.min(...scores);
+            const lowestIndex = scores.indexOf(lowest);
+
+            let interpretation = '';
+            if (avg >= 8) {
+                interpretation = 'You have <strong>high temporal coherence</strong>. Continue maintaining and refining.';
+            } else if (avg >= 6) {
+                interpretation = 'You have <strong>moderate coherence</strong> with room for development.';
+            } else if (avg >= 4) {
+                interpretation = 'You\'re <strong>experiencing challenges</strong> with temporal coherence. Focused work would help.';
+            } else {
+                interpretation = 'You may be <strong>struggling significantly</strong>. Consider professional support.';
+            }
+
+            const resultsDiv = document.getElementById('atcfResults');
+            resultsDiv.innerHTML = `
+                <div class="interactive-box">
+                    <h4>Your ATCF Profile</h4>
+                    <p><strong>Total: ${total}/40 (Average: ${avg.toFixed(1)}/10)</strong></p>
+                    <p>${interpretation}</p>
+                    <p><strong>Component Scores:</strong></p>
+                    <ul>
+                        ${components.map((c, i) => 
+                            `<li>${c}: ${scores[i]}/10 ${i === lowestIndex ? '← <em>Focus here</em>' : ''}</li>`
+                        ).join('')}
+                    </ul>
+                    <p><strong>Recommendation:</strong> Focus development work on <strong>${components[lowestIndex]}</strong> 
+                    (your lowest score). Improving this will likely help other components.</p>
+                </div>
+            `;
+            resultsDiv.style.display = 'block';
+
+            state.quizScores.atcf = { total, avg, scores };
+            saveState();
+
+            // Update profile summary
+            updateProfileSummary();
+        }
+
+        function updateProfileSummary() {
+            const summary = document.getElementById('profileSummary');
+            if (!summary) return;
+
+            if (state.quizScores.atcf) {
+                const { scores } = state.quizScores.atcf;
+                const components = [
+                    'Historical Continuity',
+                    'Present Integration',
+                    'Prospective Coherence',
+                    'Meta-Constructor Capacity'
+                ];
+
+                summary.innerHTML = `
+                    <h4>Your ATCF Profile</h4>
+                    ${components.map((c, i) => `<p><strong>${c}:</strong> ${scores[i]}/10</p>`).join('')}
+                `;
+            }
+        }
+
+        function showApplication(type) {
+            const details = document.getElementById('applicationDetails');
+            const content = {
+                inequality: `
+                    <h3>💰 Income Inequality: Frame Analysis</h3>
+                    <p><strong>The Problem:</strong> Economic frames treating humans as units override human frames valuing dignity and flourishing.</p>
+                    <p><strong>Frame Misalignment:</strong></p>
+                    <ul>
+                        <li>Economic frame: "Maximize productivity, minimize labor costs"</li>
+                        <li>Human frame: "I want meaningful work, security, time for family"</li>
+                        <li>Short-term frame: "Quarterly earnings matter most"</li>
+                        <li>Long-term frame: "Extreme inequality destabilizes everything"</li>
+                    </ul>
+                    <p><strong>Frame Solutions:</strong></p>
+                    <ul>
+                        <li>Frame awareness: Recognize economic metrics are constructed choices, not natural law</li>
+                        <li>Frame diversification: Measure well-being, capability development, not just GDP</li>
+                        <li>Frame coordination: Design institutions aligning individual and systemic health (B-corps, cooperatives, UBI)</li>
+                    </ul>
+                `,
+                discrimination: `
+                    <h3>⚖️ Discrimination: Categorical Frames Override Individual Reality</h3>
+                    <p><strong>The Problem:</strong> Category membership determines treatment regardless of individual characteristics.</p>
+                    <p><strong>How Frames Perpetuate It:</strong></p>
+                    <ul>
+                        <li>Perceptual frames: Implicit bias makes category membership salient before individual traits</li>
+                        <li>Conceptual frames: Stereotypes group people despite individual variation</li>
+                        <li>Institutional frames: Laws and policies encode categorical treatment</li>
+                    </ul>
+                    <p><strong>Frame Solutions:</strong></p>
+                    <ul>
+                        <li>Individual: Frame awareness training, deliberate individuation, counter-stereotype exposure</li>
+                        <li>Institutional: Blind processes, frame audits for disparate impact, diverse frame-holders in decisions</li>
+                        <li>Systemic: Collective examination of whether categorical frames serve human flourishing</li>
+                    </ul>
+                `,
+                conflict: `
+                    <h3>🕊️ War & Genocide: Group Identity Frames Override Humanity</h3>
+                    <p><strong>The Catastrophe:</strong> When groups recategorize others as non-human within moral frames.</p>
+                    <p><strong>The Pattern:</strong></p>
+                    <ol>
+                        <li>Frame preparation: Years of propaganda establishing new categories ("they are vermin")</li>
+                        <li>Frame enforcement: Punish those maintaining human-to-human frame</li>
+                        <li>Frame amplification: Social pressure, institutional support</li>
+                        <li>Action follows frame: Violence becomes "logical" within dehumanized frame</li>
+                    </ol>
+                    <p><strong>Frame Prevention:</strong></p>
+                    <ul>
+                        <li>Maintain cross-group frames: Emphasize common humanity, shared fate</li>
+                        <li>Contact and cooperation: Shared projects require coordination across groups</li>
+                        <li>Frame monitoring: Watch for dehumanizing language, intervene early</li>
+                        <li>Institutional frames: Laws forbidding group-based categorical exclusion</li>
+                    </ul>
+                `,
+                existential: `
+                    <h3>🌍 Existential Risks: Temporal Frame Misalignment</h3>
+                    <p><strong>The Problem:</strong> Short-term frames driving toward long-term catastrophe.</p>
+                    <p><strong>Frame Misalignment:</strong></p>
+                    <ul>
+                        <li>Individual frames: This week, this month, this year</li>
+                        <li>Economic frames: Quarterly earnings, annual growth</li>
+                        <li>Political frames: 2-4 year election cycles</li>
+                        <li>Reality frames: Decades to centuries for full impact</li>
+                    </ul>
+                    <p><strong>Frame Solutions:</strong></p>
+                    <ul>
+                        <li>Extend temporal frames: Future-self connection practices, cathedral thinking</li>
+                        <li>Institutional design: Structures representing future generations (Wales Future Generations Commissioner)</li>
+                        <li>Aligned incentives: Make success depend on long-term outcomes</li>
+                        <li>Precautionary frames: When facing catastrophic risk, err toward preservation</li>
+                    </ul>
+                `,
+                meaning: `
+                    <h3>🎯 Personal Meaning: Frame Alignment</h3>
+                    <p><strong>The Question:</strong> How do I build a life worth living?</p>
+                    <p><strong>What Goes Wrong:</strong></p>
+                    <ul>
+                        <li>Frame absorption: Adopt frames from culture without examining if they're yours</li>
+                        <li>Frame fragmentation: Different roles use incompatible frames</li>
+                        <li>Frame-reality mismatch: Frames don't match your capacities or nature</li>
+                        <li>Prospective incoherence: Can't imagine future that feels like "you"</li>
+                    </ul>
+                    <p><strong>Frame Solution for Meaning:</strong></p>
+                    <ol>
+                        <li>Frame examination: Which beliefs/values are actually mine vs. absorbed?</li>
+                        <li>Frame alignment: Do actions match values? Can I be authentic across contexts?</li>
+                        <li>Frame continuity: Does past make sense? Is there thread of "me"?</li>
+                        <li>Frame projection: Can I imagine authentic future?</li>
+                    </ol>
+                    <p><em>Meaning emerges from coherent frames across time and levels.</em></p>
+                `,
+                therapy: `
+                    <h3>🧠 Therapy & Healing: Frame Reconstruction</h3>
+                    <p><strong>Reframe Therapy As:</strong> Fundamentally about frame examination and reconstruction.</p>
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li>CBT: Identifying dysfunctional frames, reconstructing functional ones</li>
+                        <li>Trauma therapy: Integrating fragmentary frames into coherent narrative</li>
+                        <li>Narrative therapy: Reconstructing life story using different frames</li>
+                        <li>Mindfulness: Observing frames without identifying with them</li>
+                        <li>Psychedelic therapy: Temporary destabilization enabling reconstruction</li>
+                    </ul>
+                    <p><strong>The Insight:</strong> Most suffering involves rigid frames that can't adapt (low Meta-Constructor) 
+                    or fragmented frames that don't cohere (low ATCF). Treatment = frame development.</p>
+                `
+            };
+
+            details.innerHTML = content[type] || '';
+            details.style.display = 'block';
+            details.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function saveStartingPractice() {
+            const select = document.getElementById('startingPractice');
+            const commitment = document.getElementById('practiceCommitment');
+            
+            if (select.value) {
+                state.userNotes.startingPractice = select.value;
+                saveState();
+                
+                const practiceNames = {
+                    morning: 'Morning Frame-Setting',
+                    moment: 'Moment-to-Moment Awareness',
+                    evening: 'Evening Review',
+                    weekly: 'Weekly Frame Journal',
+                    mindfulness: 'Mindfulness Meditation',
+                    perspective: 'Perspective-Taking',
+                    future: 'Future Self-Visualization'
+                };
+                
+                commitment.innerHTML = `
+                    <div class="example-box">
+                        <h4>✓ Your Commitment</h4>
+                        <p><strong>${practiceNames[select.value]}</strong></p>
+                        <p>You've committed to practicing this for 2 weeks starting today.</p>
+                        <p>Set a reminder now and mark it in your calendar!</p>
+                    </div>
+                `;
+                commitment.style.display = 'block';
+            }
+        }
+
+        function generateCustomPlan() {
+            const priority = document.getElementById('priority').value;
+            const planDiv = document.getElementById('customPlan');
+            
+            if (!priority) return;
+
+            const plans = {
+                meta: {
+                    title: 'Developing Meta-Constructor Capacity',
+                    practices: [
+                        'Daily mindfulness meditation (20 min) - builds observer capacity',
+                        'Weekly belief examination - question one assumption per week',
+                        'Perspective-taking exercises - try on others\' frames daily',
+                        'Cognitive flexibility games - "How else could I see this?" when triggered'
+                    ],
+                    resources: [
+                        'Meditation apps: Headspace, Insight Timer, Waking Up',
+                        'Philosophy resources for questioning assumptions',
+                        'Therapy focusing on cognitive flexibility'
+                    ]
+                },
+                historical: {
+                    title: 'Improving Historical Continuity',
+                    practices: [
+                        'Life story journaling - write narrative in chapters',
+                        'Timeline creation - visual map of your life with key events',
+                        'Memory integration work - revisit difficult periods with compassion',
+                        'Connecting past and present - "How did past shape who I am now?"'
+                    ],
+                    resources: [
+                        'Narrative therapy approaches',
+                        'Autobiographical memory research',
+                        'Trauma integration therapy if needed (EMDR, somatic work)'
+                    ]
+                },
+                present: {
+                    title: 'Enhancing Present Integration',
+                    practices: [
+                        'Body awareness practice - notice sensations multiple times daily',
+                        'Values-behavior tracking - check alignment nightly',
+                        'Role examination - notice when you shift "selves"',
+                        'Reducing fragmentation sources - say no to inauthentic commitments'
+                    ],
+                    resources: [
+                        'Somatic practices (yoga, tai chi, body scan)',
+                        'Values clarification exercises',
+                        'Authenticity coaching or therapy'
+                    ]
+                },
+                prospective: {
+                    title: 'Building Prospective Coherence',
+                    practices: [
+                        'Future self-visualization - 10 min weekly imagining 5-years-ahead you',
+                        'Goal-identity alignment checks - monthly review of goals',
+                        'Small experiments - try activities related to possible futures',
+                        'Hope cultivation - identify daily action toward authentic future'
+                    ],
+                    resources: [
+                        'Career counseling or life coaching',
+                        'Future authoring programs',
+                        'Meaning-centered therapy approaches'
+                    ]
+                },
+                relationships: {
+                    title: 'Improving Cross-Frame Coordination',
+                    practices: [
+                        'Frame dialogue with partner/friends - share your frames explicitly',
+                        'Active perspective-taking - seriously try to understand others\' frames',
+                        'Non-defensive listening - hear different frames without feeling threatened',
+                        'Bridge-building - find shared values despite different frames'
+                    ],
+                    resources: [
+                        'Couples counseling with frame-aware approach',
+                        'Nonviolent Communication (NVC) training',
+                        'Dialogue and deliberation practices'
+                    ]
+                },
+                systemic: {
+                    title: 'Contributing to Systemic Frame Work',
+                    practices: [
+                        'Make frames explicit in your contexts - name what\'s being optimized',
+                        'Question institutional frames - "Is this serving stated purpose?"',
+                        'Support frame diversity - advocate for including different perspectives',
+                        'Model frame literacy - demonstrate in your professional/community work'
+                    ],
+                    resources: [
+                        'Organizational change literature',
+                        'Participatory design methods',
+                        'Community organizing and social movement work'
+                    ]
+                }
+            };
+
+            const plan = plans[priority];
+            planDiv.innerHTML = `
+                <div class="interactive-box">
+                    <h4>🎯 Your Custom Development Plan: ${plan.title}</h4>
+                    <p><strong>Recommended Practices:</strong></p>
+                    <ul>
+                        ${plan.practices.map(p => `<li>${p}</li>`).join('')}
+                    </ul>
+                    <p><strong>Helpful Resources:</strong></p>
+                    <ul>
+                        ${plan.resources.map(r => `<li>${r}</li>`).join('')}
+                    </ul>
+                    <p><em>Start with ONE practice and build from there. Consistency matters more than intensity.</em></p>
+                </div>
+            `;
+            planDiv.style.display = 'block';
+        }
+
+        function toggleAction(checkbox) {
+            const text = checkbox.nextElementSibling;
+            if (checkbox.checked) {
+                text.classList.add('completed');
+            } else {
+                text.classList.remove('completed');
+            }
+        }
+
+        function downloadProgress() {
+            const data = {
+                completedSections: Array.from(state.completedSections),
+                quizScores: state.quizScores,
+                userNotes: state.userNotes,
+                timestamp: new Date().toISOString()
+            };
+
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'reference-frames-progress.json';
+            a.click();
+            URL.revokeObjectURL(url);
+
+            alert('🎉 Your progress has been downloaded! You completed the full learning journey.');
+        }
+
+        // Initialize on page load
+        window.onload = initApp;
     </script>
 </body>
 </html>
