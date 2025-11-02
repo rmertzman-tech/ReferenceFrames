@@ -499,6 +499,258 @@
             border-radius: 8px;
         }
 
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background-color: var(--bg-white);
+            margin: 2% auto;
+            padding: 0;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+        }
+
+        .close {
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+            transition: transform 0.2s;
+        }
+
+        .close:hover {
+            transform: scale(1.2);
+        }
+
+        .modal-body {
+            padding: 2rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        /* PDF Viewer */
+        .pdf-viewer-container {
+            width: 100%;
+            height: 70vh;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .pdf-viewer-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Assignment Card */
+        .assignment-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+        }
+
+        .assignment-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .assignment-checklist {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+        }
+
+        .checklist-icon {
+            font-size: 1.5rem;
+            min-width: 30px;
+        }
+
+        .submission-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .submission-btn {
+            padding: 1rem;
+            background: white;
+            color: var(--primary);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .submission-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .submission-btn .icon {
+            font-size: 2rem;
+        }
+
+        /* Copy Notification */
+        .copy-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1001;
+            animation: slideIn 0.3s;
+        }
+
+        .copy-notification.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-gray);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            color: var(--primary);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        /* Resource Grid */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .resource-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .resource-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .resource-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .resource-card .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .resource-card p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .resource-card .btn {
+            width: 100%;
+        }
+
         /* Footer */
         footer {
             background: var(--text-dark);
@@ -537,39 +789,33 @@
             }
         }
 
-        /* Tooltip */
-        .tooltip {
-            position: relative;
-            display: inline-block;
-            border-bottom: 1px dotted var(--primary);
-            cursor: help;
+        /* Floating Button */
+        .floating-export {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
         }
 
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 250px;
-            background-color: var(--text-dark);
-            color: white;
-            text-align: center;
-            border-radius: 6px;
-            padding: 0.5rem;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -125px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 0.85rem;
-        }
-
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
+        .floating-export .btn {
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
         }
     </style>
 </head>
 <body>
+    <!-- Copy Notification -->
+    <div id="copyNotification" class="copy-notification">
+        ✓ Copied to clipboard! Ready to paste.
+    </div>
+
     <header>
         <div class="container">
             <h1>🔍 Reference Frames: Interactive Learning Journey</h1>
@@ -598,9 +844,82 @@
         </main>
     </div>
 
+    <!-- PDF Modal -->
+    <div id="pdfModal" class="modal">
+        <div class="modal-content" style="max-width: 1200px;">
+            <div class="modal-header">
+                <h3>📖 Reference Frames: Complete Essay (PDF)</h3>
+                <span class="close" onclick="closeModal('pdfModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="pdf-viewer-container">
+                    <iframe id="pdfViewer" src=""></iframe>
+                </div>
+                <div style="text-align: center; margin-top: 1rem;">
+                    <p style="margin-bottom: 1rem;">Having trouble viewing? <a href="#" onclick="downloadPDF(); return false;" style="color: var(--primary);">Download PDF instead</a></p>
+                    <button class="btn btn-primary" onclick="downloadPDF()">
+                        📥 Download PDF Essay
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div id="exportModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📋 Export Your Assignment Work</h3>
+                <span class="close" onclick="closeModal('exportModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 3px solid var(--primary); padding: 2rem; border-radius: 12px; margin: 2rem 0;">
+                    <h4>📝 Assignment Submission Options</h4>
+                    <p>Choose how you want to submit your work to your instructor:</p>
+                    
+                    <div style="display: grid; gap: 1rem; margin: 1.5rem 0;">
+                        <button class="btn btn-primary" onclick="exportFormatted()">
+                            📄 Copy Formatted Text (Paste into Email/LMS)
+                        </button>
+                        <button class="btn btn-secondary" onclick="exportDocument()">
+                            💾 Download Text Document
+                        </button>
+                        <button class="btn btn-outline" onclick="exportJSON()">
+                            🔧 Download Data Backup (JSON)
+                        </button>
+                    </div>
+                </div>
+
+                <div style="background: #fef3c7; border-left: 4px solid var(--warning); padding: 1.5rem; margin: 1.5rem 0; border-radius: 8px;">
+                    <h4 style="color: var(--warning); margin-bottom: 0.5rem;">⚠️ Before You Export:</h4>
+                    <ul>
+                        <li>Complete all required sections (8/8)</li>
+                        <li>Review your self-assessments for accuracy</li>
+                        <li>Check that your reflections are thoughtful and complete</li>
+                        <li>Make sure you've selected your practice commitment</li>
+                    </ul>
+                </div>
+
+                <div id="exportPreview" style="display: none; margin-top: 2rem;">
+                    <h4>Preview of Your Submission:</h4>
+                    <div style="background: white; padding: 1rem; border-radius: 8px; max-height: 400px; overflow-y: auto; font-family: monospace; font-size: 0.9rem; border: 1px solid var(--border);">
+                        <pre id="previewContent" style="white-space: pre-wrap; word-wrap: break-word; margin: 0;"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Export Button -->
+    <div class="floating-export">
+        <button class="btn btn-primary" onclick="showExportModal()" title="Export Your Work">
+            📋
+        </button>
+    </div>
+
     <footer>
         <div class="container">
-            <p>Reference Frames Learning Platform | <a href="https://github.com" target="_blank">View on GitHub</a></p>
+            <p>Reference Frames Learning Platform | Educational Assignment Tool</p>
             <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
                 Based on "Reference Frames: A Unified Lens for Understanding and Transforming Human Systems"
             </p>
@@ -608,6 +927,12 @@
     </footer>
 
     <script>
+        // ============================================
+        // PDF CONFIGURATION
+        // ============================================
+        // Place your PDF file named "Reference_Frames_Essay.pdf" in the same folder as this HTML file
+        const PDF_FILE_PATH = 'Reference_Frames_Essay.pdf';
+        
         // Application State
         const state = {
             currentSection: 0,
@@ -619,54 +944,14 @@
 
         // Section Definitions
         const sections = [
-            {
-                id: 'intro',
-                title: 'Introduction',
-                shortTitle: 'Start',
-                content: generateIntroSection
-            },
-            {
-                id: 'what-are-frames',
-                title: 'What Are Reference Frames?',
-                shortTitle: 'Basics',
-                content: generateBasicsSection
-            },
-            {
-                id: 'scales',
-                title: 'The Scale Hierarchy',
-                shortTitle: 'Scales',
-                content: generateScalesSection
-            },
-            {
-                id: 'meta-constructor',
-                title: 'Meta-Constructor Capacity',
-                shortTitle: 'Meta-Constructor',
-                content: generateMetaConstructorSection
-            },
-            {
-                id: 'atcf',
-                title: 'Temporal Coherence (ATCF)',
-                shortTitle: 'ATCF',
-                content: generateATCFSection
-            },
-            {
-                id: 'applications',
-                title: 'Real-World Applications',
-                shortTitle: 'Applications',
-                content: generateApplicationsSection
-            },
-            {
-                id: 'personal-practice',
-                title: 'Personal Practice',
-                shortTitle: 'Practice',
-                content: generatePracticeSection
-            },
-            {
-                id: 'action-plan',
-                title: 'Your Action Plan',
-                shortTitle: 'Action Plan',
-                content: generateActionPlanSection
-            }
+            { id: 'intro', title: 'Introduction', shortTitle: 'Start', content: generateIntroSection },
+            { id: 'what-are-frames', title: 'What Are Reference Frames?', shortTitle: 'Basics', content: generateBasicsSection },
+            { id: 'scales', title: 'The Scale Hierarchy', shortTitle: 'Scales', content: generateScalesSection },
+            { id: 'meta-constructor', title: 'Meta-Constructor Capacity', shortTitle: 'Meta-Constructor', content: generateMetaConstructorSection },
+            { id: 'atcf', title: 'Temporal Coherence (ATCF)', shortTitle: 'ATCF', content: generateATCFSection },
+            { id: 'applications', title: 'Real-World Applications', shortTitle: 'Applications', content: generateApplicationsSection },
+            { id: 'personal-practice', title: 'Personal Practice', shortTitle: 'Practice', content: generatePracticeSection },
+            { id: 'action-plan', title: 'Assignment Submission', shortTitle: 'Submit', content: generateActionPlanSection }
         ];
 
         // Initialize App
@@ -705,11 +990,9 @@
 
         // Show Section
         function showSection(index) {
-            // Hide all sections
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             
-            // Show target section
             document.getElementById(`section-${index}`).classList.add('active');
             document.getElementById(`nav-${index}`).classList.add('active');
             
@@ -717,7 +1000,6 @@
             updateProgress();
             saveState();
             
-            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -735,18 +1017,22 @@
             updateProgress();
             saveState();
             
-            // Show celebration if all complete
             if (state.completedSections.size === sections.length) {
                 alert('🎉 Congratulations! You\'ve completed the entire learning journey!');
             }
         }
 
-        // Save State to LocalStorage
+        // Save State
         function saveState() {
-            localStorage.setItem('referenceFramesState', JSON.stringify(state));
+            localStorage.setItem('referenceFramesState', JSON.stringify({
+                completedSections: Array.from(state.completedSections),
+                quizScores: state.quizScores,
+                userNotes: state.userNotes,
+                actionPlan: state.actionPlan
+            }));
         }
 
-        // Load State from LocalStorage
+        // Load State
         function loadState() {
             const saved = localStorage.getItem('referenceFramesState');
             if (saved) {
@@ -758,7 +1044,9 @@
             }
         }
 
-        // Section Content Generators
+        // ============================================
+        // SECTION CONTENT GENERATORS
+        // ============================================
 
         function generateIntroSection(index) {
             return `
@@ -843,6 +1131,14 @@
                         <li><strong>Apply immediately</strong>—try ideas in your daily life as you learn them</li>
                     </ol>
 
+                    <div class="example-box">
+                        <h4>📖 Complete Essay Available</h4>
+                        <p>Want to read the full essay that this learning journey is based on?</p>
+                        <button class="btn btn-primary" onclick="viewPDF()" style="margin-top: 0.5rem;">
+                            Read Full Essay (PDF)
+                        </button>
+                    </div>
+
                     <div class="interactive-box">
                         <h4>✅ Ready to Begin?</h4>
                         <p>This journey will take 60-90 minutes if done in one sitting, but you can also work through 
@@ -905,13 +1201,15 @@
                         </p>
                         <p><strong>What frames could you use to interpret this?</strong></p>
                         <textarea class="frame-input" id="frameExercise1" placeholder="Type your different possible frames here...
+
 Example: 
 - Threat frame: 'They don't like me, I'm in danger of being fired'
 - Growth frame: 'This is valuable information to improve my work'
 - Political frame: 'This is about positioning, not actually about quality'
+
 etc."></textarea>
                         <button class="btn btn-secondary" onclick="saveFrameExercise(1)">Save Your Reflection</button>
-                        <div id="frameExercise1Feedback" style="margin-top: 1rem; display: none;">
+                        <div id="frameExercise1Feedback" style="margin-top: 1rem; display: none; padding: 1rem; background: #f0fdf4; border-radius: 8px;">
                             <p style="color: var(--success); font-weight: 600;">✓ Great work! You're beginning to see how multiple frames are always possible.</p>
                         </div>
                     </div>
@@ -1670,75 +1968,9 @@ etc."></textarea>
                         </ul>
                     </div>
 
-                    <h3>Weekly Practices</h3>
-
-                    <div class="example-box">
-                        <h4>📝 Weekly Frame Journal</h4>
-                        <p><strong>Every Sunday (or your preferred day):</strong></p>
-                        <ul>
-                            <li>List frames you used most this week</li>
-                            <li>Note which served you well, which didn't</li>
-                            <li>Identify one frame you want to develop or modify</li>
-                            <li>Plan specific experiments for next week</li>
-                        </ul>
-                    </div>
-
-                    <div class="example-box">
-                        <h4>👥 Frame Dialogue</h4>
-                        <p><strong>With trusted friend, partner, or therapist:</strong></p>
-                        <ul>
-                            <li>Share your frame observations</li>
-                            <li>Ask: "What frames do you see me using?"</li>
-                            <li>Practice perspective-taking: "Help me understand your frame on this"</li>
-                            <li>Explore: "How could we coordinate across our different frames?"</li>
-                        </ul>
-                    </div>
-
-                    <h3>Specific Development Practices</h3>
-
+                    <h3>Choose Your Starting Practice</h3>
                     <div class="interactive-box">
-                        <h4>For Building Meta-Constructor Capacity:</h4>
-                        <ul>
-                            <li><strong>Mindfulness meditation:</strong> Watch thoughts without identifying with them (20 min daily)</li>
-                            <li><strong>Perspective-taking:</strong> Deliberately try on others' frames (daily practice)</li>
-                            <li><strong>Belief examination:</strong> Question one assumption per week</li>
-                            <li><strong>Cognitive flexibility games:</strong> "How else could I see this?" (whenever triggered)</li>
-                        </ul>
-                    </div>
-
-                    <div class="interactive-box">
-                        <h4>For Improving Present Integration:</h4>
-                        <ul>
-                            <li><strong>Body awareness:</strong> Notice body sensations and what frame they suggest (several times daily)</li>
-                            <li><strong>Values-behavior tracking:</strong> Check actions against stated values (nightly)</li>
-                            <li><strong>Role examination:</strong> Notice when you shift between "selves" and whether that's authentic</li>
-                            <li><strong>Reduce fragmentation sources:</strong> Say no to commitments that force inauthenticity</li>
-                        </ul>
-                    </div>
-
-                    <div class="interactive-box">
-                        <h4>For Enhancing Prospective Coherence:</h4>
-                        <ul>
-                            <li><strong>Future self-visualization:</strong> Spend 10 minutes imagining 5-years-ahead you (weekly)</li>
-                            <li><strong>Goal-identity alignment:</strong> Check if goals feel authentically yours (monthly)</li>
-                            <li><strong>Small experiments:</strong> Try activities related to possible futures to see what feels right</li>
-                            <li><strong>Hope cultivation:</strong> Identify one thing today that moves toward authentic future</li>
-                        </ul>
-                    </div>
-
-                    <div class="warning-box">
-                        <h4>⚠️ Important Reminders</h4>
-                        <ul>
-                            <li><strong>Start small:</strong> Pick ONE practice to begin with, not all at once</li>
-                            <li><strong>Be patient:</strong> Frame literacy develops over months and years, not days</li>
-                            <li><strong>Self-compassion:</strong> You'll forget, regress, struggle—that's normal</li>
-                            <li><strong>Seek support:</strong> This work is easier with help (therapy, coaching, community)</li>
-                            <li><strong>Know your limits:</strong> If frames are trauma-related, work with professional</li>
-                        </ul>
-                    </div>
-
-                    <div class="interactive-box">
-                        <h4>🎯 Your Starting Practice</h4>
+                        <h4>🎯 Your Practice Commitment</h4>
                         <p>Which practice will you start with? Choose ONE and commit to 2 weeks:</p>
                         <select id="startingPractice" class="frame-input" onchange="saveStartingPractice()">
                             <option value="">Select a practice...</option>
@@ -1753,8 +1985,19 @@ etc."></textarea>
                         <div id="practiceCommitment" style="display: none; margin-top: 1rem;"></div>
                     </div>
 
+                    <div class="warning-box">
+                        <h4>⚠️ Important Reminders</h4>
+                        <ul>
+                            <li><strong>Start small:</strong> Pick ONE practice to begin with, not all at once</li>
+                            <li><strong>Be patient:</strong> Frame literacy develops over months and years, not days</li>
+                            <li><strong>Self-compassion:</strong> You'll forget, regress, struggle—that's normal</li>
+                            <li><strong>Seek support:</strong> This work is easier with help (therapy, coaching, community)</li>
+                            <li><strong>Know your limits:</strong> If frames are trauma-related, work with professional</li>
+                        </ul>
+                    </div>
+
                     <button class="btn btn-primary" onclick="markComplete(${index}); showSection(${index + 1})">
-                        Create Your Action Plan →
+                        Create Your Action Plan & Submit →
                     </button>
                 </div>
             `;
@@ -1763,159 +2006,139 @@ etc."></textarea>
         function generateActionPlanSection(index) {
             return `
                 <div class="card">
-                    <h2>Your Personal Action Plan</h2>
-                    <p>
-                        Let's create a concrete, personalized plan for developing your frame literacy. 
-                        This isn't abstract theory—this is your roadmap for practical change.
-                    </p>
+                    <h2>📚 Assignment Submission</h2>
+                    
+                    <div class="assignment-card">
+                        <h3>📝 Complete Your Learning Journey</h3>
+                        <p style="font-size: 1.1rem; margin-bottom: 1rem;">
+                            You've worked through an interactive learning experience. Now it's time to submit your work!
+                        </p>
+                        
+                        <div class="assignment-checklist">
+                            <h4 style="margin-bottom: 1rem;">✅ Required Completion Checklist</h4>
+                            <div class="checklist-item">
+                                <span class="checklist-icon">📖</span>
+                                <span><strong>Read the Complete Essay:</strong> Review the full PDF document</span>
+                            </div>
+                            <div class="checklist-item">
+                                <span class="checklist-icon">✍️</span>
+                                <span><strong>Complete All 8 Sections:</strong> Work through every module</span>
+                            </div>
+                            <div class="checklist-item">
+                                <span class="checklist-icon">📊</span>
+                                <span><strong>Self-Assessments:</strong> Fill out ATCF and Meta-Constructor scores</span>
+                            </div>
+                            <div class="checklist-item">
+                                <span class="checklist-icon">💭</span>
+                                <span><strong>Written Reflections:</strong> Complete all exercise prompts thoughtfully</span>
+                            </div>
+                            <div class="checklist-item">
+                                <span class="checklist-icon">🎯</span>
+                                <span><strong>Practice Commitment:</strong> Select your development priority</span>
+                            </div>
+                        </div>
 
+                        <div class="submission-options">
+                            <button class="submission-btn" onclick="viewPDF()">
+                                <span class="icon">📖</span>
+                                <span>Read Full Essay</span>
+                            </button>
+                            <button class="submission-btn" onclick="showExportModal()">
+                                <span class="icon">📋</span>
+                                <span>Export My Work</span>
+                            </button>
+                            <button class="submission-btn" onclick="downloadPDF()">
+                                <span class="icon">💾</span>
+                                <span>Download PDF</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <h3>Your Current Status</h3>
                     <div class="interactive-box">
-                        <h4>📊 Your Current Profile Summary</h4>
-                        <div id="profileSummary">
-                            <p><em>Complete the self-assessments in previous sections to see your profile here.</em></p>
-                        </div>
+                        <h4>📊 Completion Summary</h4>
+                        <p><strong>Sections Completed:</strong> <span id="sectionsCompleted">${state.completedSections.size}/8</span></p>
+                        <p><strong>ATCF Assessment:</strong> <span id="atcfStatus">Not completed</span></p>
+                        <p><strong>Meta-Constructor Assessment:</strong> <span id="metaStatus">Not completed</span></p>
+                        <p><strong>Reflections:</strong> <span id="reflectionsStatus">Check each section</span></p>
                     </div>
 
-                    <h3>Step 1: Identify Your Development Priority</h3>
-                    <p>Based on your self-assessments and lived experience, what needs most attention?</p>
-                    <div class="interactive-box">
-                        <select id="priority" class="frame-input" onchange="generateCustomPlan()">
-                            <option value="">Select your priority...</option>
-                            <option value="meta">Developing Meta-Constructor Capacity (examining and modifying frames)</option>
-                            <option value="historical">Improving Historical Continuity (integrating past)</option>
-                            <option value="present">Enhancing Present Integration (aligning across levels)</option>
-                            <option value="prospective">Building Prospective Coherence (authentic future vision)</option>
-                            <option value="relationships">Improving coordination across different frames (relationships)</option>
-                            <option value="systemic">Contributing to systemic/institutional frame work</option>
-                        </select>
+                    <h3>📤 How to Submit Your Work</h3>
+                    <div class="example-box">
+                        <h4>Three Easy Submission Options:</h4>
+                        <ol>
+                            <li><strong>Copy & Paste (Easiest):</strong>
+                                <ul>
+                                    <li>Click "Export My Work" button above or the floating 📋 button</li>
+                                    <li>Choose "Copy Formatted Text"</li>
+                                    <li>Paste into your email or LMS submission box</li>
+                                    <li>Add your name and submit!</li>
+                                </ul>
+                            </li>
+                            <li><strong>Download File:</strong>
+                                <ul>
+                                    <li>Click "Export My Work"</li>
+                                    <li>Choose "Download Text Document"</li>
+                                    <li>Open in Word/Google Docs to add final touches</li>
+                                    <li>Upload to your LMS or email to instructor</li>
+                                </ul>
+                            </li>
+                            <li><strong>Backup Option:</strong>
+                                <ul>
+                                    <li>Click "Download Data Backup (JSON)"</li>
+                                    <li>This saves all your work in case of technical issues</li>
+                                </ul>
+                            </li>
+                        </ol>
                     </div>
 
-                    <div id="customPlan" style="display: none; margin-top: 2rem;">
-                        <!-- Custom plan will be generated here -->
-                    </div>
-
-                    <h3>Step 2: Your 30-Day Frame Development Plan</h3>
-                    <div id="actionItems">
-                        <div class="action-item">
-                            <input type="checkbox" class="action-checkbox" onchange="toggleAction(this)">
-                            <div class="action-text">
-                                <strong>Week 1:</strong> Choose one daily practice and commit to it (morning frame-setting, 
-                                evening review, or moment-to-moment awareness)
-                            </div>
-                        </div>
-
-                        <div class="action-item">
-                            <input type="checkbox" class="action-checkbox" onchange="toggleAction(this)">
-                            <div class="action-text">
-                                <strong>Week 1-2:</strong> Notice and name your frames throughout the day. Don't try to change 
-                                them yet—just build awareness. "I'm in threat frame." "I'm using perfectionist frame."
-                            </div>
-                        </div>
-
-                        <div class="action-item">
-                            <input type="checkbox" class="action-checkbox" onchange="toggleAction(this)">
-                            <div class="action-text">
-                                <strong>Week 2:</strong> Start a frame journal. Daily or weekly, your choice. Track: 
-                                What frames did I use? When did they serve me? When did they not?
-                            </div>
-                        </div>
-
-                        <div class="action-item">
-                            <input type="checkbox" class="action-checkbox" onchange="toggleAction(this)">
-                            <div class="action-text">
-                                <strong>Week 3:</strong> Practice perspective-taking. Choose someone whose frame differs from yours. 
-                                Seriously try to understand their frame, not to agree but to comprehend.
-                            </div>
-                        </div>
-
-                        <div class="action-item">
-                            <input type="checkbox" class="action-checkbox" onchange="toggleAction(this)">
-                            <div class="action-text">
-                                <strong>Week 3-4:</strong> Experiment with deliberately shifting frames. When you notice unhelpful 
-                                frame, try asking: "What other frame could I use?" Actually try it.
-                            </div>
-                        </div>
-
-                        <div class="action-item">
-                            <input type="checkbox" class="action-checkbox" onchange="toggleAction(this)">
-                            <div class="action-text">
-                                <strong>Week 4:</strong> Review your month. What changed? What's easier? What's still difficult? 
-                                Adjust plan for next month based on learning.
-                            </div>
-                        </div>
-
-                        <div class="action-item">
-                            <input type="checkbox" class="action-checkbox" onchange="toggleAction(this)">
-                            <div class="action-text">
-                                <strong>Optional:</strong> Share this framework with one trusted person (friend, partner, therapist). 
-                                Ask them to support your development and give feedback.
-                            </div>
-                        </div>
-
-                        <div class="action-item">
-                            <input type="checkbox" class="action-checkbox" onchange="toggleAction(this)">
-                            <div class="action-text">
-                                <strong>Optional:</strong> Re-visit this web app monthly to refresh concepts and assess progress.
-                            </div>
-                        </div>
-                    </div>
-
-                    <h3>Step 3: When to Seek Additional Support</h3>
+                    <h3>📋 Grading Rubric</h3>
                     <div class="warning-box">
-                        <h4>Consider Professional Help If:</h4>
+                        <h4>How Your Work Will Be Evaluated (100 points total):</h4>
                         <ul>
-                            <li>Your ATCF self-assessment was very low (average below 4 per component)</li>
-                            <li>You're experiencing significant distress, depression, or anxiety</li>
-                            <li>Frame rigidity seems trauma-related (examination triggers intense fear)</li>
-                            <li>You've tried self-work for 2-3 months with no improvement</li>
-                            <li>You're struggling with major life transitions or crises</li>
+                            <li><strong>Completion (40 points):</strong> All sections finished, all assessments completed</li>
+                            <li><strong>Reflection Quality (40 points):</strong> Thoughtful, specific, well-written responses to exercises</li>
+                            <li><strong>Understanding (20 points):</strong> Evidence you grasp core concepts (shown in reflections)</li>
                         </ul>
-                        <p><strong>Frame work can complement but doesn't replace professional mental health care.</strong></p>
+                        <p style="margin-top: 1rem;"><em>Note: Self-assessment scores are NOT graded for "correctness"—they're about honest self-reflection.</em></p>
                     </div>
 
-                    <h3>Resources for Continued Learning</h3>
-                    <div class="resource-list">
-                        <div class="resource-item">
-                            <span><strong>Complete Essay:</strong> "Reference Frames: A Unified Lens"</span>
-                            <button class="btn btn-outline" onclick="alert('This would download/link to the full essay')">
-                                Download PDF
-                            </button>
-                        </div>
-                        <div class="resource-item">
-                            <span><strong>Further Reading:</strong> Theoretical foundations and research</span>
-                            <button class="btn btn-outline" onclick="alert('This would link to bibliography')">
-                                View Bibliography
-                            </button>
-                        </div>
-                        <div class="resource-item">
-                            <span><strong>Community:</strong> Connect with others doing frame work</span>
-                            <button class="btn btn-outline" onclick="alert('This would link to community forum/Discord')">
-                                Join Community
-                            </button>
-                        </div>
+                    <h3>❓ Frequently Asked Questions</h3>
+                    <div class="interactive-box">
+                        <h4>Q: Can I see what I'm submitting before I send it?</h4>
+                        <p><strong>A:</strong> Yes! Click "Copy Formatted Text" and a preview appears at the bottom. Review it before submitting.</p>
+
+                        <h4>Q: What if I close my browser?</h4>
+                        <p><strong>A:</strong> Your work is saved automatically. Just open this page again and continue where you left off.</p>
+
+                        <h4>Q: Can I edit my submission after exporting?</h4>
+                        <p><strong>A:</strong> Yes! The text file can be opened and edited in Word/Google Docs before submission.</p>
+
+                        <h4>Q: How long should my reflections be?</h4>
+                        <p><strong>A:</strong> 3-5 sentences minimum for each exercise. Quality over quantity—be specific and thoughtful.</p>
+
+                        <h4>Q: When is this due?</h4>
+                        <p><strong>A:</strong> Check with your instructor for the specific due date.</p>
                     </div>
 
-                    <div class="example-box" style="margin-top: 2rem;">
-                        <h4>🎉 Congratulations!</h4>
-                        <p>You've completed the Reference Frames learning journey. You now understand:</p>
-                        <ul>
-                            <li>What reference frames are and why they matter</li>
-                            <li>How frames operate across scales from cells to civilizations</li>
-                            <li>Meta-constructor capacity and temporal coherence</li>
-                            <li>Applications to real-world challenges</li>
-                            <li>Practical tools for daily frame work</li>
-                        </ul>
-                        <p><strong>The real work begins now—in your daily practice and lived experience.</strong></p>
+                    <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--bg-light); border-radius: 12px;">
+                        <h4 style="color: var(--primary); margin-bottom: 1rem;">🎉 Ready to Submit?</h4>
+                        <p style="margin-bottom: 1.5rem;">Make sure everything is complete, then export your work!</p>
+                        <button class="btn btn-success" onclick="showExportModal()" style="font-size: 1.2rem; padding: 1.2rem 2.5rem;">
+                            📋 Export & Submit Assignment
+                        </button>
                     </div>
 
-                    <button class="btn btn-success" onclick="markComplete(${index}); downloadProgress()">
-                        ✓ Complete Journey & Download Progress
+                    <button class="btn btn-primary" onclick="markComplete(${index})">
+                        ✓ Mark This Section Complete
                     </button>
                 </div>
             `;
         }
 
-        // Utility Functions
+        // ============================================
+        // UTILITY FUNCTIONS
+        // ============================================
 
         function toggleScale(element) {
             element.classList.toggle('expanded');
@@ -1942,7 +2165,7 @@ etc."></textarea>
             feedback.classList.add('show', isCorrect ? 'correct' : 'incorrect');
             feedback.innerHTML = isCorrect 
                 ? '✓ <strong>Correct!</strong> Reference frames determine what information means and what actions make sense—they\'re operational structures, not just opinions or facts.'
-                : '✗ <strong>Not quite.</strong> Reference frames are more than opinions or truth claims—they\'re the operational structures that determine what information means and enables action. Try again by revisiting the section!';
+                : '✗ <strong>Not quite.</strong> Reference frames are more than opinions or truth claims—they\'re the operational structures that determine what information means and enables action.';
         }
 
         function saveFrameExercise(num) {
@@ -2012,6 +2235,7 @@ etc."></textarea>
 
             state.quizScores.metaConstructor = { total, avg, scores };
             saveState();
+            updateSubmissionStatus();
         }
 
         function calculateATCF() {
@@ -2063,135 +2287,122 @@ etc."></textarea>
 
             state.quizScores.atcf = { total, avg, scores };
             saveState();
-
-            // Update profile summary
-            updateProfileSummary();
-        }
-
-        function updateProfileSummary() {
-            const summary = document.getElementById('profileSummary');
-            if (!summary) return;
-
-            if (state.quizScores.atcf) {
-                const { scores } = state.quizScores.atcf;
-                const components = [
-                    'Historical Continuity',
-                    'Present Integration',
-                    'Prospective Coherence',
-                    'Meta-Constructor Capacity'
-                ];
-
-                summary.innerHTML = `
-                    <h4>Your ATCF Profile</h4>
-                    ${components.map((c, i) => `<p><strong>${c}:</strong> ${scores[i]}/10</p>`).join('')}
-                `;
-            }
+            updateSubmissionStatus();
         }
 
         function showApplication(type) {
             const details = document.getElementById('applicationDetails');
             const content = {
                 inequality: `
-                    <h3>💰 Income Inequality: Frame Analysis</h3>
-                    <p><strong>The Problem:</strong> Economic frames treating humans as units override human frames valuing dignity and flourishing.</p>
-                    <p><strong>Frame Misalignment:</strong></p>
-                    <ul>
-                        <li>Economic frame: "Maximize productivity, minimize labor costs"</li>
-                        <li>Human frame: "I want meaningful work, security, time for family"</li>
-                        <li>Short-term frame: "Quarterly earnings matter most"</li>
-                        <li>Long-term frame: "Extreme inequality destabilizes everything"</li>
-                    </ul>
-                    <p><strong>Frame Solutions:</strong></p>
-                    <ul>
-                        <li>Frame awareness: Recognize economic metrics are constructed choices, not natural law</li>
-                        <li>Frame diversification: Measure well-being, capability development, not just GDP</li>
-                        <li>Frame coordination: Design institutions aligning individual and systemic health (B-corps, cooperatives, UBI)</li>
-                    </ul>
+                    <div class="example-box">
+                        <h3>💰 Income Inequality: Frame Analysis</h3>
+                        <p><strong>The Problem:</strong> Economic frames treating humans as units override human frames valuing dignity.</p>
+                        <p><strong>Frame Misalignment:</strong></p>
+                        <ul>
+                            <li>Economic frame: "Maximize productivity, minimize labor costs"</li>
+                            <li>Human frame: "I want meaningful work, security, time for family"</li>
+                            <li>Short-term frame: "Quarterly earnings matter most"</li>
+                            <li>Long-term frame: "Extreme inequality destabilizes everything"</li>
+                        </ul>
+                        <p><strong>Frame Solutions:</strong></p>
+                        <ul>
+                            <li>Frame awareness: Recognize economic metrics are choices, not natural law</li>
+                            <li>Frame diversification: Measure well-being, not just GDP</li>
+                            <li>Frame coordination: Design institutions aligning individual and systemic health</li>
+                        </ul>
+                    </div>
                 `,
                 discrimination: `
-                    <h3>⚖️ Discrimination: Categorical Frames Override Individual Reality</h3>
-                    <p><strong>The Problem:</strong> Category membership determines treatment regardless of individual characteristics.</p>
-                    <p><strong>How Frames Perpetuate It:</strong></p>
-                    <ul>
-                        <li>Perceptual frames: Implicit bias makes category membership salient before individual traits</li>
-                        <li>Conceptual frames: Stereotypes group people despite individual variation</li>
-                        <li>Institutional frames: Laws and policies encode categorical treatment</li>
-                    </ul>
-                    <p><strong>Frame Solutions:</strong></p>
-                    <ul>
-                        <li>Individual: Frame awareness training, deliberate individuation, counter-stereotype exposure</li>
-                        <li>Institutional: Blind processes, frame audits for disparate impact, diverse frame-holders in decisions</li>
-                        <li>Systemic: Collective examination of whether categorical frames serve human flourishing</li>
-                    </ul>
+                    <div class="example-box">
+                        <h3>⚖️ Discrimination: Categorical Frames Override Individuals</h3>
+                        <p><strong>The Problem:</strong> Category membership determines treatment regardless of individual characteristics.</p>
+                        <p><strong>How Frames Perpetuate It:</strong></p>
+                        <ul>
+                            <li>Perceptual frames: Implicit bias makes category membership salient</li>
+                            <li>Conceptual frames: Stereotypes group people despite individual variation</li>
+                            <li>Institutional frames: Laws and policies encode categorical treatment</li>
+                        </ul>
+                        <p><strong>Frame Solutions:</strong></p>
+                        <ul>
+                            <li>Individual: Frame awareness training, deliberate individuation</li>
+                            <li>Institutional: Blind processes, frame audits for disparate impact</li>
+                            <li>Systemic: Collective examination of whether categorical frames serve flourishing</li>
+                        </ul>
+                    </div>
                 `,
                 conflict: `
-                    <h3>🕊️ War & Genocide: Group Identity Frames Override Humanity</h3>
-                    <p><strong>The Catastrophe:</strong> When groups recategorize others as non-human within moral frames.</p>
-                    <p><strong>The Pattern:</strong></p>
-                    <ol>
-                        <li>Frame preparation: Years of propaganda establishing new categories ("they are vermin")</li>
-                        <li>Frame enforcement: Punish those maintaining human-to-human frame</li>
-                        <li>Frame amplification: Social pressure, institutional support</li>
-                        <li>Action follows frame: Violence becomes "logical" within dehumanized frame</li>
-                    </ol>
-                    <p><strong>Frame Prevention:</strong></p>
-                    <ul>
-                        <li>Maintain cross-group frames: Emphasize common humanity, shared fate</li>
-                        <li>Contact and cooperation: Shared projects require coordination across groups</li>
-                        <li>Frame monitoring: Watch for dehumanizing language, intervene early</li>
-                        <li>Institutional frames: Laws forbidding group-based categorical exclusion</li>
-                    </ul>
+                    <div class="example-box">
+                        <h3>🕊️ War & Genocide: Group Identity Overrides Humanity</h3>
+                        <p><strong>The Catastrophe:</strong> Groups recategorize others as non-human within moral frames.</p>
+                        <p><strong>The Pattern:</strong></p>
+                        <ol>
+                            <li>Frame preparation: Propaganda establishing new categories</li>
+                            <li>Frame enforcement: Punish those maintaining human-to-human frame</li>
+                            <li>Frame amplification: Social pressure, institutional support</li>
+                            <li>Action follows frame: Violence becomes "logical"</li>
+                        </ol>
+                        <p><strong>Frame Prevention:</strong></p>
+                        <ul>
+                            <li>Maintain cross-group frames: Emphasize common humanity</li>
+                            <li>Contact and cooperation: Shared projects require coordination</li>
+                            <li>Frame monitoring: Watch for dehumanizing language</li>
+                        </ul>
+                    </div>
                 `,
                 existential: `
-                    <h3>🌍 Existential Risks: Temporal Frame Misalignment</h3>
-                    <p><strong>The Problem:</strong> Short-term frames driving toward long-term catastrophe.</p>
-                    <p><strong>Frame Misalignment:</strong></p>
-                    <ul>
-                        <li>Individual frames: This week, this month, this year</li>
-                        <li>Economic frames: Quarterly earnings, annual growth</li>
-                        <li>Political frames: 2-4 year election cycles</li>
-                        <li>Reality frames: Decades to centuries for full impact</li>
-                    </ul>
-                    <p><strong>Frame Solutions:</strong></p>
-                    <ul>
-                        <li>Extend temporal frames: Future-self connection practices, cathedral thinking</li>
-                        <li>Institutional design: Structures representing future generations (Wales Future Generations Commissioner)</li>
-                        <li>Aligned incentives: Make success depend on long-term outcomes</li>
-                        <li>Precautionary frames: When facing catastrophic risk, err toward preservation</li>
-                    </ul>
+                    <div class="example-box">
+                        <h3>🌍 Existential Risks: Temporal Frame Misalignment</h3>
+                        <p><strong>The Problem:</strong> Short-term frames driving toward long-term catastrophe.</p>
+                        <p><strong>Frame Misalignment:</strong></p>
+                        <ul>
+                            <li>Individual frames: This week, this month, this year</li>
+                            <li>Economic frames: Quarterly earnings, annual growth</li>
+                            <li>Political frames: 2-4 year election cycles</li>
+                            <li>Reality frames: Decades to centuries for full impact</li>
+                        </ul>
+                        <p><strong>Frame Solutions:</strong></p>
+                        <ul>
+                            <li>Extend temporal frames: Future-self connection, cathedral thinking</li>
+                            <li>Institutional design: Structures representing future generations</li>
+                            <li>Aligned incentives: Make success depend on long-term outcomes</li>
+                        </ul>
+                    </div>
                 `,
                 meaning: `
-                    <h3>🎯 Personal Meaning: Frame Alignment</h3>
-                    <p><strong>The Question:</strong> How do I build a life worth living?</p>
-                    <p><strong>What Goes Wrong:</strong></p>
-                    <ul>
-                        <li>Frame absorption: Adopt frames from culture without examining if they're yours</li>
-                        <li>Frame fragmentation: Different roles use incompatible frames</li>
-                        <li>Frame-reality mismatch: Frames don't match your capacities or nature</li>
-                        <li>Prospective incoherence: Can't imagine future that feels like "you"</li>
-                    </ul>
-                    <p><strong>Frame Solution for Meaning:</strong></p>
-                    <ol>
-                        <li>Frame examination: Which beliefs/values are actually mine vs. absorbed?</li>
-                        <li>Frame alignment: Do actions match values? Can I be authentic across contexts?</li>
-                        <li>Frame continuity: Does past make sense? Is there thread of "me"?</li>
-                        <li>Frame projection: Can I imagine authentic future?</li>
-                    </ol>
-                    <p><em>Meaning emerges from coherent frames across time and levels.</em></p>
+                    <div class="example-box">
+                        <h3>🎯 Personal Meaning: Frame Alignment</h3>
+                        <p><strong>The Question:</strong> How do I build a life worth living?</p>
+                        <p><strong>What Goes Wrong:</strong></p>
+                        <ul>
+                            <li>Frame absorption: Adopt frames without examining if they're yours</li>
+                            <li>Frame fragmentation: Different roles use incompatible frames</li>
+                            <li>Frame-reality mismatch: Frames don't match your capacities</li>
+                            <li>Prospective incoherence: Can't imagine future that feels like "you"</li>
+                        </ul>
+                        <p><strong>Frame Solution for Meaning:</strong></p>
+                        <ol>
+                            <li>Frame examination: Which beliefs/values are mine vs. absorbed?</li>
+                            <li>Frame alignment: Do actions match values?</li>
+                            <li>Frame continuity: Does past make sense?</li>
+                            <li>Frame projection: Can I imagine authentic future?</li>
+                        </ol>
+                    </div>
                 `,
                 therapy: `
-                    <h3>🧠 Therapy & Healing: Frame Reconstruction</h3>
-                    <p><strong>Reframe Therapy As:</strong> Fundamentally about frame examination and reconstruction.</p>
-                    <p><strong>Examples:</strong></p>
-                    <ul>
-                        <li>CBT: Identifying dysfunctional frames, reconstructing functional ones</li>
-                        <li>Trauma therapy: Integrating fragmentary frames into coherent narrative</li>
-                        <li>Narrative therapy: Reconstructing life story using different frames</li>
-                        <li>Mindfulness: Observing frames without identifying with them</li>
-                        <li>Psychedelic therapy: Temporary destabilization enabling reconstruction</li>
-                    </ul>
-                    <p><strong>The Insight:</strong> Most suffering involves rigid frames that can't adapt (low Meta-Constructor) 
-                    or fragmented frames that don't cohere (low ATCF). Treatment = frame development.</p>
+                    <div class="example-box">
+                        <h3>🧠 Therapy & Healing: Frame Reconstruction</h3>
+                        <p><strong>Reframe Therapy As:</strong> Fundamentally about frame examination and reconstruction.</p>
+                        <p><strong>Examples:</strong></p>
+                        <ul>
+                            <li>CBT: Identifying dysfunctional frames, reconstructing functional ones</li>
+                            <li>Trauma therapy: Integrating fragmentary frames into coherent narrative</li>
+                            <li>Narrative therapy: Reconstructing life story using different frames</li>
+                            <li>Mindfulness: Observing frames without identifying with them</li>
+                            <li>Psychedelic therapy: Temporary destabilization enabling reconstruction</li>
+                        </ul>
+                        <p><strong>The Insight:</strong> Most suffering involves rigid frames (low Meta-Constructor) 
+                        or fragmented frames (low ATCF). Treatment = frame development.</p>
+                    </div>
                 `
             };
 
@@ -2227,146 +2438,257 @@ etc."></textarea>
                     </div>
                 `;
                 commitment.style.display = 'block';
+                updateSubmissionStatus();
             }
         }
 
-        function generateCustomPlan() {
-            const priority = document.getElementById('priority').value;
-            const planDiv = document.getElementById('customPlan');
+        function updateSubmissionStatus() {
+            const sectionsEl = document.getElementById('sectionsCompleted');
+            const atcfEl = document.getElementById('atcfStatus');
+            const metaEl = document.getElementById('metaStatus');
             
-            if (!priority) return;
+            if (sectionsEl) sectionsEl.textContent = `${state.completedSections.size}/8`;
+            if (atcfEl) atcfEl.textContent = state.quizScores.atcf ? '✓ Completed' : 'Not completed';
+            if (metaEl) metaEl.textContent = state.quizScores.metaConstructor ? '✓ Completed' : 'Not completed';
+        }
 
-            const plans = {
-                meta: {
-                    title: 'Developing Meta-Constructor Capacity',
-                    practices: [
-                        'Daily mindfulness meditation (20 min) - builds observer capacity',
-                        'Weekly belief examination - question one assumption per week',
-                        'Perspective-taking exercises - try on others\' frames daily',
-                        'Cognitive flexibility games - "How else could I see this?" when triggered'
-                    ],
-                    resources: [
-                        'Meditation apps: Headspace, Insight Timer, Waking Up',
-                        'Philosophy resources for questioning assumptions',
-                        'Therapy focusing on cognitive flexibility'
-                    ]
-                },
-                historical: {
-                    title: 'Improving Historical Continuity',
-                    practices: [
-                        'Life story journaling - write narrative in chapters',
-                        'Timeline creation - visual map of your life with key events',
-                        'Memory integration work - revisit difficult periods with compassion',
-                        'Connecting past and present - "How did past shape who I am now?"'
-                    ],
-                    resources: [
-                        'Narrative therapy approaches',
-                        'Autobiographical memory research',
-                        'Trauma integration therapy if needed (EMDR, somatic work)'
-                    ]
-                },
-                present: {
-                    title: 'Enhancing Present Integration',
-                    practices: [
-                        'Body awareness practice - notice sensations multiple times daily',
-                        'Values-behavior tracking - check alignment nightly',
-                        'Role examination - notice when you shift "selves"',
-                        'Reducing fragmentation sources - say no to inauthentic commitments'
-                    ],
-                    resources: [
-                        'Somatic practices (yoga, tai chi, body scan)',
-                        'Values clarification exercises',
-                        'Authenticity coaching or therapy'
-                    ]
-                },
-                prospective: {
-                    title: 'Building Prospective Coherence',
-                    practices: [
-                        'Future self-visualization - 10 min weekly imagining 5-years-ahead you',
-                        'Goal-identity alignment checks - monthly review of goals',
-                        'Small experiments - try activities related to possible futures',
-                        'Hope cultivation - identify daily action toward authentic future'
-                    ],
-                    resources: [
-                        'Career counseling or life coaching',
-                        'Future authoring programs',
-                        'Meaning-centered therapy approaches'
-                    ]
-                },
-                relationships: {
-                    title: 'Improving Cross-Frame Coordination',
-                    practices: [
-                        'Frame dialogue with partner/friends - share your frames explicitly',
-                        'Active perspective-taking - seriously try to understand others\' frames',
-                        'Non-defensive listening - hear different frames without feeling threatened',
-                        'Bridge-building - find shared values despite different frames'
-                    ],
-                    resources: [
-                        'Couples counseling with frame-aware approach',
-                        'Nonviolent Communication (NVC) training',
-                        'Dialogue and deliberation practices'
-                    ]
-                },
-                systemic: {
-                    title: 'Contributing to Systemic Frame Work',
-                    practices: [
-                        'Make frames explicit in your contexts - name what\'s being optimized',
-                        'Question institutional frames - "Is this serving stated purpose?"',
-                        'Support frame diversity - advocate for including different perspectives',
-                        'Model frame literacy - demonstrate in your professional/community work'
-                    ],
-                    resources: [
-                        'Organizational change literature',
-                        'Participatory design methods',
-                        'Community organizing and social movement work'
-                    ]
-                }
+        // ============================================
+        // PDF AND EXPORT FUNCTIONS
+        // ============================================
+
+        function viewPDF() {
+            const modal = document.getElementById('pdfModal');
+            const viewer = document.getElementById('pdfViewer');
+            viewer.src = PDF_FILE_PATH;
+            modal.style.display = 'block';
+        }
+
+        function downloadPDF() {
+            const link = document.createElement('a');
+            link.href = PDF_FILE_PATH;
+            link.download = 'Reference_Frames_Essay.pdf';
+            link.click();
+        }
+
+        function showExportModal() {
+            const modal = document.getElementById('exportModal');
+            modal.style.display = 'block';
+            updateSubmissionStatus();
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+
+        function generateFormattedSubmission() {
+            const date = new Date().toLocaleDateString();
+            let studentName = prompt('Enter your name:', '');
+            if (!studentName || studentName.trim() === '') {
+                studentName = '[YOUR NAME HERE]';
+            }
+            
+            let submission = `
+================================================================================
+REFERENCE FRAMES LEARNING JOURNEY - ASSIGNMENT SUBMISSION
+================================================================================
+
+Student Name: ${studentName}
+Date Completed: ${date}
+Course: [COURSE NAME/NUMBER]
+Instructor: [INSTRUCTOR NAME]
+
+Sections Completed: ${state.completedSections.size} of ${sections.length}
+Completion Status: ${state.completedSections.size === sections.length ? 'COMPLETE ✓' : 'INCOMPLETE'}
+
+================================================================================
+PART 1: SELF-ASSESSMENTS
+================================================================================
+
+`;
+
+            // ATCF scores
+            if (state.quizScores.atcf) {
+                const { total, avg, scores } = state.quizScores.atcf;
+                const components = [
+                    'Historical Continuity',
+                    'Present Integration',
+                    'Prospective Coherence',
+                    'Meta-Constructor Capacity'
+                ];
+                
+                submission += `ATCF (Adaptive Temporal Coherence Function) Assessment
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Total Score: ${total}/40 (Average: ${avg.toFixed(1)}/10)
+
+Component Breakdown:
+`;
+                components.forEach((comp, i) => {
+                    submission += `  • ${comp}: ${scores[i]}/10\n`;
+                });
+                submission += '\n';
+            } else {
+                submission += 'ATCF Assessment: NOT COMPLETED\n\n';
+            }
+
+            // Meta-Constructor scores
+            if (state.quizScores.metaConstructor) {
+                const { total, avg, scores } = state.quizScores.metaConstructor;
+                submission += `Meta-Constructor Capacity Assessment
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Total Score: ${total}/50 (Average: ${avg.toFixed(1)}/10)
+
+Component Breakdown:
+  • Observe frames: ${scores[0]}/10
+  • Question frames: ${scores[1]}/10
+  • Imagine alternatives: ${scores[2]}/10
+  • Modify deliberately: ${scores[3]}/10
+  • Maintain coherence: ${scores[4]}/10
+
+`;
+            } else {
+                submission += 'Meta-Constructor Assessment: NOT COMPLETED\n\n';
+            }
+
+            submission += `
+================================================================================
+PART 2: REFLECTIONS AND EXERCISES
+================================================================================
+
+`;
+
+            // Reflections
+            const exercises = {
+                'frameExercise1': 'Frame Recognition Exercise (Section 2: What Are Reference Frames?)',
+                'scaleReflection': 'Cross-Scale Misalignment Reflection (Section 3: Scale Hierarchy)',
+                'problemAnalysis': 'Problem Frame Analysis (Section 6: Applications)',
+                'startingPractice': 'Selected Starting Practice (Section 7: Personal Practice)'
             };
 
-            const plan = plans[priority];
-            planDiv.innerHTML = `
-                <div class="interactive-box">
-                    <h4>🎯 Your Custom Development Plan: ${plan.title}</h4>
-                    <p><strong>Recommended Practices:</strong></p>
-                    <ul>
-                        ${plan.practices.map(p => `<li>${p}</li>`).join('')}
-                    </ul>
-                    <p><strong>Helpful Resources:</strong></p>
-                    <ul>
-                        ${plan.resources.map(r => `<li>${r}</li>`).join('')}
-                    </ul>
-                    <p><em>Start with ONE practice and build from there. Consistency matters more than intensity.</em></p>
-                </div>
-            `;
-            planDiv.style.display = 'block';
+            Object.entries(exercises).forEach(([key, title]) => {
+                submission += `${title}\n${'-'.repeat(title.length)}\n`;
+                if (state.userNotes[key]) {
+                    submission += `${state.userNotes[key]}\n\n`;
+                } else {
+                    submission += '[NOT COMPLETED]\n\n';
+                }
+            });
+
+            submission += `
+================================================================================
+PART 3: COMPLETION SUMMARY
+================================================================================
+
+Modules Completed:
+`;
+
+            sections.forEach((section, index) => {
+                const completed = state.completedSections.has(index) ? '✓' : '○';
+                submission += `${completed} ${section.title}\n`;
+            });
+
+            submission += `
+================================================================================
+INSTRUCTOR NOTES
+================================================================================
+
+This submission represents completion of the Reference Frames interactive 
+learning journey, including:
+
+- Self-assessment scores for ATCF and Meta-Constructor Capacity
+- Written reflections from all interactive exercises
+- Selected development priority and practice commitment  
+- Record of completed learning modules
+- Engagement with the complete essay (PDF)
+
+Student has worked through all ${sections.length} sections of the interactive platform
+and completed the requirements as indicated above.
+
+For questions about this assignment, please contact the student.
+
+================================================================================
+END OF SUBMISSION
+================================================================================
+
+Generated: ${new Date().toLocaleString()}
+Platform: Reference Frames Interactive Learning Journey
+Based on: "Reference Frames: A Unified Lens for Understanding and 
+          Transforming Human Systems"
+`;
+
+            return submission;
         }
 
-        function toggleAction(checkbox) {
-            const text = checkbox.nextElementSibling;
-            if (checkbox.checked) {
-                text.classList.add('completed');
-            } else {
-                text.classList.remove('completed');
-            }
+        function exportFormatted() {
+            const formatted = generateFormattedSubmission();
+            
+            // Copy to clipboard
+            const textarea = document.createElement('textarea');
+            textarea.value = formatted;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            
+            // Show preview
+            document.getElementById('previewContent').textContent = formatted;
+            document.getElementById('exportPreview').style.display = 'block';
+            
+            // Show notification
+            showCopyNotification();
+            
+            alert('✅ Your assignment has been copied to clipboard!\n\nYou can now:\n• Paste into an email to your instructor\n• Paste into your LMS text box\n• Paste into a Word document\n\nA preview is shown below.');
         }
 
-        function downloadProgress() {
+        function exportDocument() {
+            const formatted = generateFormattedSubmission();
+            const blob = new Blob([formatted], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            const date = new Date().toISOString().split('T')[0];
+            a.href = url;
+            a.download = `Reference-Frames-Assignment-${date}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            alert('✅ Your assignment has been downloaded!\n\nThe file can be:\n• Opened in Word/Google Docs for formatting\n• Submitted directly as a text file\n• Copied and pasted as needed');
+        }
+
+        function exportJSON() {
             const data = {
+                studentName: prompt('Enter your name for the file:', '') || 'Student',
                 completedSections: Array.from(state.completedSections),
                 quizScores: state.quizScores,
                 userNotes: state.userNotes,
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
+                version: '1.0'
             };
 
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
+            const date = new Date().toISOString().split('T')[0];
             a.href = url;
-            a.download = 'reference-frames-progress.json';
+            a.download = `reference-frames-backup-${date}.json`;
             a.click();
             URL.revokeObjectURL(url);
+            
+            alert('✅ Backup file downloaded!\n\nThis JSON file contains all your data and can be used as a backup.');
+        }
 
-            alert('🎉 Your progress has been downloaded! You completed the full learning journey.');
+        function showCopyNotification() {
+            const notification = document.getElementById('copyNotification');
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
         }
 
         // Initialize on page load
